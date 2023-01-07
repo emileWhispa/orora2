@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'json/user.dart';
+import 'main.dart';
 import 'reg_ex_input_formatter.dart';
 import 'stateful_builder_2.dart';
 import 'package:email_validator/email_validator.dart';
@@ -117,6 +118,12 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     }
   }
 
+  void logOut()async{
+    (await prefs).clear();
+    User.user = null;
+    push(const MyHomePage(title: "title"),replaceAll: true);
+  }
+
   String? validateEmail(String? value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -150,7 +157,12 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
     return test.replaceAllMapped(reg, (Match match) => '${match[1]},');
   }
 
-  String fmtNbr(num test) {
+  String fmtNbr(num? test) {
+
+    if(test == null){
+      return "";
+    }
+
     return fmt(test.toInt().toString());
   }
 

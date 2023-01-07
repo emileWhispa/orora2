@@ -9,7 +9,8 @@ import 'package:orora2/super_base.dart';
 import 'json/farm.dart';
 
 class FarmListScreen extends StatefulWidget{
-  const FarmListScreen({super.key});
+  final bool fromProduction;
+  const FarmListScreen({super.key, this.fromProduction = false});
 
   @override
   State<FarmListScreen> createState() => _FarmListScreenState();
@@ -47,33 +48,36 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
         onRefresh: loadData,
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,childAspectRatio: 0.8),
-          itemCount: _farms.length+1,
+          itemCount: _farms.length+(widget.fromProduction ? 0 : 1),
           itemBuilder: (context,index){
-            index = index - 1;
-            if(index < 0 ){
-              return Card(clipBehavior: Clip.antiAliasWithSaveLayer,shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-              ),child: InkWell(
-                onTap: (){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>const FarmRegistration()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text("Add New Farm",style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold
-                      ),textAlign: TextAlign.center,),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Icon(Icons.add,size: 40,),
-                      )
-                    ],
+
+            if(!widget.fromProduction){
+              index = index - 1;
+              if(index < 0 ){
+                return Card(clipBehavior: Clip.antiAliasWithSaveLayer,shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                ),child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>const FarmRegistration()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text("Add New Farm",style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
+                        ),textAlign: TextAlign.center,),
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: Icon(Icons.add,size: 40,),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ),);
+                ),);
+              }
             }
 
             var farm = _farms[index];
@@ -82,7 +86,7 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
                 borderRadius: BorderRadius.circular(10)
             ),child: InkWell(
               onTap: (){
-                Navigator.push(context, CupertinoPageRoute(builder: (context)=>LivestockList(farm: farm,)));
+                Navigator.push(context, CupertinoPageRoute(builder: (context)=>LivestockList(farm: farm,fromProduction: widget.fromProduction,)));
               },
               child: Padding(
                 padding: const EdgeInsets.all(15.0),

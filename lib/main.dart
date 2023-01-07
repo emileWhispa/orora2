@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           )
         ),
         inputDecorationTheme: InputDecorationTheme(
-          contentPadding: const EdgeInsets.symmetric(vertical: 14,horizontal: 17),
+          contentPadding: const EdgeInsets.symmetric(vertical: 12,horizontal: 17),
           fillColor: const Color(0xffF2F1F7),
           filled: true,
           border: OutlineInputBorder(
