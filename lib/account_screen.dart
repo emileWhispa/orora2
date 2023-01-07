@@ -200,8 +200,7 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                         onTap: () async {
                           var b = await confirmDialog(context);
                           if(b){
-                            (await prefs).clear();
-                            push(const MyHomePage(title: "title"),replaceAll: true);
+                            logOut();
                           }
                         },
                         child: Container(

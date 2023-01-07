@@ -36,15 +36,19 @@ class _DashboardState extends Superbase<Dashboard> {
     return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
       "token":User.user?.token
     }),onValue: (s,v){
-      setState(() {
-        expenses = s['expenses'];
-        farmProduction = s['farmProduction'];
-        feeds = s['feeds'];
-        sales = s['sales'];
-        message = s['message'];
-        myFarms = s['myFarms'];
-      });
-      refreshData();
+      if(s['code'] == 200) {
+        setState(() {
+          expenses = s['expenses'];
+          farmProduction = s['farmProduction'];
+          feeds = s['feeds'];
+          sales = s['sales'];
+          message = s['message'];
+          myFarms = s['myFarms'];
+        });
+        refreshData();
+      }else if(s['code'] == 403){
+        logOut();
+      }
     },error: (s,v)=>refreshData());
   }
 
@@ -55,6 +59,7 @@ class _DashboardState extends Superbase<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF8F8F8),
       body: RefreshIndicator(
         onRefresh: loadData,
         child: ListView(
@@ -233,30 +238,35 @@ class _DashboardState extends Superbase<Dashboard> {
                     height: 200,
                     child: Card(color: const Color(0xffFDE9D0),shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)
-                    ),child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Farm Production",style: TextStyle(
-                            fontSize: 14
-                          ),textAlign: TextAlign.center,),
-                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(fmtNbr(farmProduction),style: const TextStyle(
-                                fontSize: 40,
-                              fontWeight: FontWeight.w700
-                            ),),
-                          ),
-                          Image.asset("assets/production.png")
-                        ],
+                    ),child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>const FarmListScreen(fromProduction: true,)));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Farm Production",style: TextStyle(
+                              fontSize: 14
+                            ),textAlign: TextAlign.center,),
+                             Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(fmtNbr(farmProduction),style: const TextStyle(
+                                  fontSize: 40,
+                                fontWeight: FontWeight.w700
+                              ),),
+                            ),
+                            Image.asset("assets/production.png")
+                          ],
+                        ),
                       ),
                     ),),
                   )),
                 ],
               ),
             ),
-            const Padding(padding: EdgeInsets.all(15),child: SizedBox(height: 250,child: LineChartSample1()),),
+            const Padding(padding: EdgeInsets.all(15),child: SizedBox(height: 220,child: LineChartSample1()),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(

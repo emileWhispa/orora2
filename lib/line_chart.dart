@@ -93,8 +93,8 @@ class _LineChart extends StatelessWidget {
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Color(0xffa2d206),
-      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontWeight: FontWeight.normal,
       fontSize: 14,
     );
     String text;
@@ -130,9 +130,9 @@ class _LineChart extends StatelessWidget {
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Color(0xff56790d),
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
+      color: Colors.black,
+      fontWeight: FontWeight.normal,
+      fontSize: 14,
     );
     Widget text;
     switch (value.toInt()) {
@@ -169,7 +169,7 @@ class _LineChart extends StatelessWidget {
   FlBorderData get borderData => FlBorderData(
     show: true,
     border: const Border(
-      bottom: BorderSide(color: Color(0xff759a15), width: 4),
+      bottom: BorderSide(color: Colors.black, width: 3),
       left: BorderSide(color: Colors.transparent),
       right: BorderSide(color: Colors.transparent),
       top: BorderSide(color: Colors.transparent),
@@ -178,8 +178,8 @@ class _LineChart extends StatelessWidget {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
     isCurved: true,
-    color: const Color(0xff4af699),
-    barWidth: 8,
+    color: Colors.black,
+    barWidth: 5,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(show: false),
@@ -196,8 +196,8 @@ class _LineChart extends StatelessWidget {
 
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
     isCurved: true,
-    color: const Color(0xff9BCA20),
-    barWidth: 8,
+    color: Colors.black,
+    barWidth: 5,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(
@@ -216,8 +216,8 @@ class _LineChart extends StatelessWidget {
 
   LineChartBarData get lineChartBarData1_3 => LineChartBarData(
     isCurved: true,
-    color: const Color(0xff27b6fc),
-    barWidth: 8,
+    color: Colors.blue.shade600,
+    barWidth: 5,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(show: false),
@@ -233,7 +233,7 @@ class _LineChart extends StatelessWidget {
   LineChartBarData get lineChartBarData2_1 => LineChartBarData(
     isCurved: true,
     curveSmoothness: 0,
-    color: const Color(0x444af699),
+    color: Colors.black,
     barWidth: 4,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
@@ -252,7 +252,7 @@ class _LineChart extends StatelessWidget {
   LineChartBarData get lineChartBarData2_2 => LineChartBarData(
     isCurved: true,
     color: const Color(0xff9BCA20),
-    barWidth: 4,
+    barWidth: 2,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(
@@ -272,8 +272,9 @@ class _LineChart extends StatelessWidget {
   LineChartBarData get lineChartBarData2_3 => LineChartBarData(
     isCurved: true,
     curveSmoothness: 0,
-    color: const Color(0x4427b6fc),
+    color: Colors.black,
     barWidth: 2,
+
     isStrokeCapRound: true,
     dotData: FlDotData(show: true),
     belowBarData: BarAreaData(show: false),
@@ -305,66 +306,9 @@ class LineChartSample1State extends State<LineChartSample1> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.23,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(18)),
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              const Color(0xff617c0e),
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const SizedBox(
-                  height: 10,
-                ),
-                 Text(
-                  'Unfold Shop 2018',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                const Text(
-                  'Monthly Sales',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 37,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16, left: 6),
-                    child: _LineChart(isShowingMainData: isShowingMainData),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+    return Card(child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: _LineChart(isShowingMainData: isShowingMainData),
+    ));
   }
 }
