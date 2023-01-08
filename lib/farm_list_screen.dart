@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/farm_production_list.dart';
 import 'package:orora2/farm_registration.dart';
 import 'package:orora2/json/user.dart';
 import 'package:orora2/livestock_list.dart';
@@ -85,7 +86,9 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
             return Card(clipBehavior: Clip.antiAliasWithSaveLayer,color: const Color(0xffD5EAE3),shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10)
             ),child: InkWell(
-              onTap: (){
+              onTap: widget.fromProduction ? (){
+                push(FarmProductionList(farm: farm));
+              } : (){
                 Navigator.push(context, CupertinoPageRoute(builder: (context)=>LivestockList(farm: farm,fromProduction: widget.fromProduction,)));
               },
               child: Padding(

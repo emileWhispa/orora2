@@ -119,9 +119,7 @@ class _LivestockListState extends Superbase<LivestockList> {
                   child: InkWell(
                     onTap: widget.fromProduction
                         ? () {
-                            push(CreateFarmProduction(
-                              livestock: livestock,
-                            ));
+
                           }
                         : null,
                     child: Padding(

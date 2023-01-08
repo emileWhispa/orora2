@@ -5,7 +5,6 @@ import 'package:orora2/json/user.dart';
 import 'package:orora2/super_base.dart';
 import 'package:orora2/transaction_registration.dart';
 
-import 'input_dec.dart';
 import 'json/farm.dart';
 import 'json/transaction.dart';
 
@@ -21,6 +20,8 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
 
   List<Farm> _farms = [];
   Farm? _farm;
+  int expenses = 0;
+  int income = 0;
 
   List<Transaction> _transactions = [];
   final _key = GlobalKey<RefreshIndicatorState>();
@@ -34,6 +35,10 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
           setState(() {
             _farms =
                 (obj['data'] as Iterable).map((e) => Farm.fromJson(e)).toList();
+            if(_farm == null && _farms.isNotEmpty){
+              _farm = _farms.first;
+              loadData();
+            }
           });
         });
   }
@@ -53,6 +58,8 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
       "farm_id":_farm?.id,
     }),onValue: (obj,url){
       setState(() {
+        expenses = obj['summary']['expenses'];
+        income = obj['summary']['income'];
         _transactions = (obj['data'] as Iterable?)?.map((e) => Transaction.fromJson(e)).toList() ?? [];
       });
     });
@@ -139,8 +146,9 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                     shape: BoxShape.circle
                                 ),
                                 height: 40,
-                                child: IconButton(onPressed: (){
-                                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>const TransactionRegistration()));
+                                child: IconButton(onPressed: ()async {
+                                  await Navigator.push(context, CupertinoPageRoute(builder: (context)=>const TransactionRegistration()));
+                                  _key.currentState?.show();
                                 }, icon: const Icon(Icons.add,size: 33,),padding: EdgeInsets.zero,),
                               ),
                             ),
@@ -161,13 +169,13 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                       padding: const EdgeInsets.only(left: 4),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: const [
-                                          Text("283,520 RWF",style: TextStyle(
+                                        children: [
+                                          Text("${fmtNbr(expenses)} RWF",style: const TextStyle(
                                               color: Color(0xffD80404),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700
                                           ),),
-                                          Text("Expenses")
+                                          const Text("Expenses")
                                         ],
                                       ),
                                     ),
@@ -182,13 +190,13 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                       padding: const EdgeInsets.only(left: 4),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: const [
-                                          Text("625,500 RWF",style: TextStyle(
+                                        children:  [
+                                          Text("${fmtNbr(income)} RWF",style: const TextStyle(
                                               color: Color(0xffD80404),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700
                                           ),),
-                                          Text("Sales")
+                                          const Text("Income")
                                         ],
                                       ),
                                     ),

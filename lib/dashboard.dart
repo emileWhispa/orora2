@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/json/user.dart';
 import 'package:orora2/line_chart.dart';
+import 'package:orora2/search_delegate.dart';
 import 'package:orora2/super_base.dart';
+
+import 'search_screen.dart';
 
 class Dashboard extends StatefulWidget{
   const Dashboard({super.key});
@@ -110,6 +113,9 @@ class _DashboardState extends Superbase<Dashboard> {
                                 color: Colors.black26,shape: BoxShape.circle),
                               child: IconButton(color: Colors.white70,onPressed: (){
 
+                                showSearch(context: context, delegate: SearchDemoSearchDelegate((query){
+                                  return SearchScreen(query: query);
+                                }));
                               },icon: const Icon(Icons.search),),
                             ),
                           )

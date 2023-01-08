@@ -88,7 +88,6 @@ class _TransactionRegistrationState extends Superbase<TransactionRegistration> {
           "notes":_notesController.text,
           }),
         onValue: (obj,url){
-        print(obj);
         showSnack(obj['message']);
         if(obj['code'] == 200){
           Navigator.pop(context,obj);
