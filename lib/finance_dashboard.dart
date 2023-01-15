@@ -192,7 +192,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children:  [
                                           Text("${fmtNbr(income)} RWF",style: const TextStyle(
-                                              color: Color(0xffD80404),
+                                              color: Color(0xff3C9343),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700
                                           ),),
