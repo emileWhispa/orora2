@@ -42,13 +42,13 @@ class BarChartSample2State extends State<BarChartSample2> {
       });
 
 
-      double m = maxY/4;
+      // double m = maxY/4;
 
-      array.add(0);
-      array.add(m);
-      array.add(m*2);
-      array.add(m*3);
-      array.add(m*4);
+      // array.add(0);
+      // array.add(m);
+      // array.add(m*2);
+      // array.add(m*3);
+      // array.add(m*4);
 
       rawBarGroups = items;
       setState(() {
