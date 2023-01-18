@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
 import 'package:orora2/json/user.dart';
@@ -35,16 +36,22 @@ class _DashboardState extends Superbase<Dashboard> {
     });
     super.initState();
   }
-  
+
+  Map? incomeData;
+  Map? expensesData;
+
   Future<void> loadData(){
     return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
       "token":User.user?.token
     }),onValue: (s,v){
+      print(s);
       if(s['code'] == 200) {
         setState(() {
           expenses = s['expenses'];
           farmProduction = s['farmProduction'];
           feeds = s['feeds'];
+          incomeData = s['week']['income'];
+          expensesData = s['week']['expenses'];
           sales = s['sales'];
           message = s['message'];
           myFarms = s['myFarms'];
@@ -278,7 +285,11 @@ class _DashboardState extends Superbase<Dashboard> {
                 ],
               ),
             ),
-            const Padding(padding: EdgeInsets.all(15),child: SizedBox(height: 220,child: LineChartSample1()),),
+            Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 220,child: incomeData != null && expensesData != null ? BarChartSample2(
+              incomeData: incomeData!,
+              expenses: expensesData!,
+            )
+                : const Center(child: CircularProgressIndicator())),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
