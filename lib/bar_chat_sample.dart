@@ -133,7 +133,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                   sideTitles: SideTitles(
                     showTitles: true,
                     reservedSize: 30,
-                    interval: 1,
+                    interval: maxY/4,
                     getTitlesWidget: leftTitles,
                   ),
                 ),
@@ -157,7 +157,7 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontSize: 14,
     );
     String text;
-    if(array.any((element) => element == value)){
+    if(true){
       text = '${value.toInt()}';
     } else {
       return Container();
