@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:orora2/main.dart';
+import 'package:orora2/edit_profile_screen.dart';
 import 'package:orora2/super_base.dart';
 
 class ProfileScreen extends StatefulWidget{
@@ -107,26 +107,31 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                   )
                               ),
                               padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(radius:20,child: Icon(Icons.person),),
-                                  Expanded(child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: const [
-                                        Text("Personal Information",style: TextStyle(
-                                            fontSize: 16
-                                        ),),
-                                        SizedBox(height: 5,),
-                                        Text("Profile, Address, Email, Phone",style: TextStyle(
-                                            color: Color(0xff403939)
-                                        ),),
-                                      ],
-                                    ),
-                                  )),
-                                  const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
-                                ],
+                              child: InkWell(
+                                onTap: (){
+                                  push(const EditProfileScreen());
+                                },
+                                child: Row(
+                                  children: [
+                                    const CircleAvatar(radius:20,child: Icon(Icons.person),),
+                                    Expanded(child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: const [
+                                          Text("Personal Information",style: TextStyle(
+                                              fontSize: 16
+                                          ),),
+                                          SizedBox(height: 5,),
+                                          Text("Profile, Address, Email, Phone",style: TextStyle(
+                                              color: Color(0xff403939)
+                                          ),),
+                                        ],
+                                      ),
+                                    )),
+                                    const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                                  ],
+                                ),
                               ),
                             ),
                             Container(

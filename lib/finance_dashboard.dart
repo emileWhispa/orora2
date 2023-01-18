@@ -57,11 +57,15 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
       "token":User.user?.token,
       "farm_id":_farm?.id,
     }),onValue: (obj,url){
-      setState(() {
-        expenses = obj['summary']['expenses'];
-        income = obj['summary']['income'];
-        _transactions = (obj['data'] as Iterable?)?.map((e) => Transaction.fromJson(e)).toList() ?? [];
-      });
+      if(obj is Map && obj.containsKey("summary")) {
+        setState(() {
+          expenses = obj['summary']['expenses'];
+          income = obj['summary']['income'];
+          _transactions = (obj['data'] as Iterable?)
+              ?.map((e) => Transaction.fromJson(e))
+              .toList() ?? [];
+        });
+      }
     });
   }
 
