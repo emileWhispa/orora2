@@ -154,7 +154,7 @@ class BarChartSample2State extends State<BarChartSample2> {
     const style = TextStyle(
       color: Colors.black54,
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 12,
     );
     String text;
     if(true){
@@ -165,7 +165,7 @@ class BarChartSample2State extends State<BarChartSample2> {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,
-      child: Text(text, style: style,maxLines: 1,overflow: TextOverflow.ellipsis,),
+      child: Text(text, style: style,maxLines: 2,overflow: TextOverflow.ellipsis,),
     );
   }
 
