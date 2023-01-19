@@ -7,7 +7,6 @@ import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
 import 'package:orora2/json/user.dart';
-import 'package:orora2/line_chart.dart';
 import 'package:orora2/search_delegate.dart';
 import 'package:orora2/super_base.dart';
 
@@ -44,7 +43,6 @@ class _DashboardState extends Superbase<Dashboard> {
     return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
       "token":User.user?.token
     }),onValue: (s,v){
-      print(s);
       if(s['code'] == 200) {
         setState(() {
           expenses = s['expenses'];
@@ -153,7 +151,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                             color: Color(0xffD80404),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
-                                          ),),
+                                          ),maxLines: 1,overflow: TextOverflow.ellipsis,),
                                           const Text("Expenses")
                                         ],
                                       ),
@@ -174,7 +172,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                             color: Color(0xff3C9343),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
-                                          ),),
+                                          ),maxLines: 1,overflow: TextOverflow.ellipsis),
                                           const Text("Sales")
                                         ],
                                       ),

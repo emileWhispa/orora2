@@ -42,7 +42,7 @@ class _LivestockRegistrationState extends Superbase<LivestockRegistration> {
         if(s['code'] == 200) {
           goBack();
         }
-      },error: (s,v)=>print(s));
+      });
       setState(() {
         _loading = false;
       });

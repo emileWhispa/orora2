@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/super_base.dart';
 
 class BarChartSample2 extends StatefulWidget {
   final Map incomeData;
@@ -12,7 +13,7 @@ class BarChartSample2 extends StatefulWidget {
   State<StatefulWidget> createState() => BarChartSample2State();
 }
 
-class BarChartSample2State extends State<BarChartSample2> {
+class BarChartSample2State extends Superbase<BarChartSample2> {
   final double width = 7;
 
    List<BarChartGroupData> rawBarGroups = [];
@@ -22,39 +23,41 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   double maxY = 4.0;
 
-  List<double> array = [];
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
-      final items = <BarChartGroupData>[];
-      int k=0;
-      widget.incomeData.forEach((key, value) {
-
-        double inc = (value as num).toDouble();
-        double exp = (widget.expenses[key] as num).toDouble();
-
-        maxY = max(maxY, max(inc, exp));
-
-        items.add(makeGroupData(k++, exp, inc));
-      });
-
-
-      // double m = maxY/4;
-
-      // array.add(0);
-      // array.add(m);
-      // array.add(m*2);
-      // array.add(m*3);
-      // array.add(m*4);
-
-      rawBarGroups = items;
-      setState(() {
-        showingBarGroups = rawBarGroups;
-      });
+      loadData();
     });
+  }
+
+  void loadData(){
+    final items = <BarChartGroupData>[];
+    int k=0;
+    widget.incomeData.forEach((key, value) {
+
+      double inc = (value as num).toDouble();
+      double exp = (widget.expenses[key] as num).toDouble();
+
+      maxY = max(maxY, max(inc, exp));
+
+      items.add(makeGroupData(k++, exp, inc));
+    });
+
+    rawBarGroups = items;
+
+    setState(() {
+      showingBarGroups = rawBarGroups;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant BarChartSample2 oldWidget) {
+    if(widget.incomeData != oldWidget.incomeData){
+      loadData();
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -156,12 +159,7 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontWeight: FontWeight.bold,
       fontSize: 12,
     );
-    String text;
-    if(true){
-      text = '${value.toInt()}';
-    } else {
-      return Container();
-    }
+    String text= fmtNbr(value);
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,
