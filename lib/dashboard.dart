@@ -153,7 +153,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                             color: Color(0xffD80404),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
-                                          ),),
+                                          ),maxLines: 1,overflow: TextOverflow.ellipsis,),
                                           const Text("Expenses")
                                         ],
                                       ),
@@ -174,7 +174,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                             color: Color(0xff3C9343),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
-                                          ),),
+                                          ),maxLines: 1,overflow: TextOverflow.ellipsis),
                                           const Text("Sales")
                                         ],
                                       ),
