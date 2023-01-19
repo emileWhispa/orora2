@@ -54,7 +54,6 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
 
   @override
   void didUpdateWidget(covariant BarChartSample2 oldWidget) {
-    print("dd");
     if(widget.incomeData != oldWidget.incomeData){
       loadData();
     }

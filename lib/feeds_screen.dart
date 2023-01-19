@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:orora2/feeds_registration.dart';
 import 'package:orora2/stock_activity_screen.dart';
 import 'package:orora2/super_base.dart';
 
@@ -38,7 +37,6 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
     return ajax(url: "feeds/overview",method: "POST",data: FormData.fromMap({
       "token":User.user?.token,
     }),onValue: (s,v){
-      print(s);
       setState(() {
         expiring = s['expiring'];
         percentage = s['percentage'];

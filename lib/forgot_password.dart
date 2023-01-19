@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orora2/super_base.dart';
 import 'package:orora2/validate_code.dart';
@@ -38,8 +37,7 @@ class _ForgotPasswordState extends Superbase<ForgotPassword> {
             } else {
               showSnack(obj['message']);
             }
-          },
-          error: (s, v) =>print(s));
+          });
       setState(() {
         _loading = false;
       });

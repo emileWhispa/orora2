@@ -4,7 +4,6 @@ import 'package:orora2/create_farm_production.dart';
 import 'package:orora2/super_base.dart';
 
 import 'json/farm.dart';
-import 'json/livestock.dart';
 import 'json/production.dart';
 import 'json/user.dart';
 

@@ -7,7 +7,6 @@ import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
 import 'package:orora2/json/user.dart';
-import 'package:orora2/line_chart.dart';
 import 'package:orora2/search_delegate.dart';
 import 'package:orora2/super_base.dart';
 
