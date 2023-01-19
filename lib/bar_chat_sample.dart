@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/super_base.dart';
 
 class BarChartSample2 extends StatefulWidget {
   final Map incomeData;
@@ -12,7 +13,7 @@ class BarChartSample2 extends StatefulWidget {
   State<StatefulWidget> createState() => BarChartSample2State();
 }
 
-class BarChartSample2State extends State<BarChartSample2> {
+class BarChartSample2State extends Superbase<BarChartSample2> {
   final double width = 7;
 
    List<BarChartGroupData> rawBarGroups = [];
@@ -45,6 +46,7 @@ class BarChartSample2State extends State<BarChartSample2> {
     });
 
     rawBarGroups = items;
+
     setState(() {
       showingBarGroups = rawBarGroups;
     });
@@ -52,6 +54,7 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   @override
   void didUpdateWidget(covariant BarChartSample2 oldWidget) {
+    print("dd");
     if(widget.incomeData != oldWidget.incomeData){
       loadData();
     }
@@ -157,12 +160,7 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontWeight: FontWeight.bold,
       fontSize: 12,
     );
-    String text;
-    if(true){
-      text = '${value.toInt()}';
-    } else {
-      return Container();
-    }
+    String text= fmtNbr(value);
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,

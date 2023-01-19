@@ -44,7 +44,6 @@ class _DashboardState extends Superbase<Dashboard> {
     return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
       "token":User.user?.token
     }),onValue: (s,v){
-      print(s);
       if(s['code'] == 200) {
         setState(() {
           expenses = s['expenses'];
