@@ -7,6 +7,7 @@ import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
 import 'package:orora2/json/user.dart';
+import 'package:orora2/report_screen.dart';
 import 'package:orora2/search_delegate.dart';
 import 'package:orora2/super_base.dart';
 
@@ -293,9 +294,12 @@ class _DashboardState extends Superbase<Dashboard> {
               child: Row(
                 children: [
                   Expanded(child: Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: Image.asset("assets/ellipse.png"),
                   )),
-                  Expanded(child: Card(child: Image.asset("assets/reports.png")))
+                  Expanded(child: Card(child: InkWell(onTap: (){
+                    push(const ReportScreen());
+                  },child: Image.asset("assets/reports.png"))))
                 ],
               ),
             ),
