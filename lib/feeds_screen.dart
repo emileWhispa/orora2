@@ -63,6 +63,7 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
       body: RefreshIndicator(
         onRefresh: loadData,
         child: ListView(
+          padding: const EdgeInsets.all(15),
           children: [
             Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -234,7 +235,19 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                                   fontWeight: FontWeight.w700
                               ),),
                             ),
-                            Image.asset("assets/goat.png")
+                            Expanded(child: Image.asset("assets/goat.png")),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: const [
+                                  Icon(Icons.signpost,size: 13,),
+                                  Text("Kayonza, Gahini",style: TextStyle(
+                                    fontSize: 12
+                                  ),),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -263,7 +276,19 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                                   fontWeight: FontWeight.w700
                               ),),
                             ),
-                            Image.asset("assets/cow.png")
+                            Expanded(child: Image.asset("assets/cow.png")),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: const [
+                                  Icon(Icons.signpost,size: 13,),
+                                  Text("Kayonza, Gahini",style: TextStyle(
+                                      fontSize: 12
+                                  ),),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -291,7 +316,19 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                                   fontWeight: FontWeight.w700
                               ),),
                             ),
-                            Image.asset("assets/cow.png")
+                            Expanded(child: Image.asset("assets/cow.png")),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 3),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: const [
+                                  Icon(Icons.signpost,size: 13,),
+                                  Text("Kayonza, Gahini",style: TextStyle(
+                                      fontSize: 12
+                                  ),),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
