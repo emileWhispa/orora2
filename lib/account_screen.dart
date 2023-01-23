@@ -170,7 +170,7 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: InkWell(
                                 onTap: ()async{
-                                  launchUrlString("https://api.whatsapp.com/send/?phone=+250 788 606 765&text&type=phone_number&app_absent=0");
+                                  launchUrlString("https://api.whatsapp.com/send/?phone=+250788606765&text&type=phone_number&app_absent=0");
                                 },
                                 child: Row(
                                   children: [
