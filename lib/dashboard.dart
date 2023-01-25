@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
@@ -28,6 +29,7 @@ class _DashboardState extends Superbase<Dashboard> {
   int myFarms = 0;
   int feeds = 0;
   int farmProduction = 0;
+
   
   @override
   void initState() {
@@ -78,7 +80,7 @@ class _DashboardState extends Superbase<Dashboard> {
             Stack(
               children: [
                 Container(
-                  height: 255,
+                  height: 230,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -129,14 +131,14 @@ class _DashboardState extends Superbase<Dashboard> {
                         ],
                       ),
                       Card(
-                        margin: EdgeInsets.zero.copyWith(top: 20),
+                        margin: EdgeInsets.zero.copyWith(top: 9),
                         elevation: 12,
                         shadowColor: Colors.black26,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 30),
                           child: Row(
                             children: [
                               Expanded(child: Row(
@@ -148,7 +150,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${fmtNbr(expenses)} RWF",style: const TextStyle(
+                                          Text("${formatter.format(expenses)} RWF",style: const TextStyle(
                                             color: Color(0xffD80404),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
@@ -169,7 +171,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${fmtNbr(sales)} RWF",style: const TextStyle(
+                                          Text("${formatter.format(sales)} RWF",style: const TextStyle(
                                             color: Color(0xff3C9343),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700
@@ -291,16 +293,38 @@ class _DashboardState extends Superbase<Dashboard> {
                 : const Center(child: CircularProgressIndicator())),),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                children: [
-                  Expanded(child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Image.asset("assets/ellipse.png"),
-                  )),
-                  Expanded(child: Card(child: InkWell(onTap: (){
-                    push(const ReportScreen());
-                  },child: Image.asset("assets/reports.png"))))
-                ],
+              child: SizedBox(
+                height: 200,
+                child: Row(
+                  children: [
+                    Expanded(child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Activities",style: Theme.of(context).textTheme.titleLarge,),
+                            Expanded(child: Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: Image.asset("assets/ellipse.png"),
+                            )),
+                          ],
+                        ),
+                      ),
+                    )),
+                    Expanded(child: Card(child: InkWell(onTap: (){
+                      push(const ReportScreen());
+                    },child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text("Reports",style: Theme.of(context).textTheme.titleLarge,),
+                          Expanded(child: Image.asset("assets/reports.png")),
+                        ],
+                      ),
+                    ))))
+                  ],
+                ),
               ),
             ),
           ],

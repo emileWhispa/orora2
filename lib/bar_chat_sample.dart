@@ -69,7 +69,7 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Theme.of(context).primaryColorLight,
         child: Padding(
-          padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 5).copyWith(bottom: 0),
           child: BarChart(
             BarChartData(
               maxY: maxY,
@@ -135,7 +135,7 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 30,
+                    reservedSize: 39,
                     interval: maxY/4,
                     getTitlesWidget: leftTitles,
                   ),
@@ -155,9 +155,9 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
 
   Widget leftTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.black54,
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
+      color: Colors.black87,
+      fontWeight: FontWeight.normal,
+      fontSize: 10,
     );
     String text= fmtNbr(value);
     return SideTitleWidget(
@@ -177,9 +177,9 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
     final Widget text = Text(
       titles[value.toInt()],
       style: const TextStyle(
-        color: Colors.black54,
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
+        color: Colors.black87,
+        fontWeight: FontWeight.normal,
+        fontSize: 10,
       ),
     );
 
@@ -192,18 +192,18 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
     return BarChartGroupData(
-      barsSpace: 4,
+      barsSpace: 2,
       x: x,
       barRods: [
         BarChartRodData(
           toY: y1,
-          color: Theme.of(context).primaryColorDark,
+          color: Colors.black54,
           width: width,
         ),
         BarChartRodData(
           toY: y2,
-          color: Colors.black54,
           width: width,
+          color: Theme.of(context).primaryColorDark,
         ),
       ],
     );

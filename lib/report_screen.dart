@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:orora2/report_bar_chart.dart';
 import 'package:orora2/super_base.dart';
 
+import 'bar_chat_sample.dart';
 import 'json/user.dart';
 
 class ReportScreen extends StatefulWidget{
@@ -17,14 +18,16 @@ class ReportScreen extends StatefulWidget{
 class _ReportScreenState extends Superbase<ReportScreen> {
 
   String message = "";
+  int income = 0;
+  int profit = 0;
   int expenses = 0;
-  int sales = 0;
-  int myFarms = 0;
-  int feeds = 0;
-  int farmProduction = 0;
+  late DateTime start;
+  late DateTime end;
 
   @override
   void initState() {
+    end = DateTime.now();
+    start = end.subtract(const Duration(days: 30));
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadData();
     });
@@ -35,25 +38,24 @@ class _ReportScreenState extends Superbase<ReportScreen> {
   Map? expensesData;
 
   Future<void> loadData(){
-    return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
+    return ajax(url: "reports/",method: "POST",data: FormData.fromMap({
       "token":User.user?.token
     }),onValue: (s,v){
       if(s['code'] == 200) {
         setState(() {
+          incomeData = s['chart']['income'];
+          expensesData = s['chart']['expenses'];
+          income = s['income'];
+          profit = s['profit'];
           expenses = s['expenses'];
-          farmProduction = s['farmProduction'];
-          feeds = s['feeds'];
-          incomeData = s['week']['income'];
-          expensesData = s['week']['expenses'];
-          sales = s['sales'];
-          message = s['message'];
-          myFarms = s['myFarms'];
         });
         refreshData();
       }else if(s['code'] == 403){
         logOut();
       }
-    },error: (s,v)=>refreshData());
+    },error: (s,v){
+      refreshData();
+    });
   }
 
   void refreshData(){
@@ -96,14 +98,35 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                   Text("Reports",style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                       color: Colors.white
                                   ),),
-                                  Text("2023-01-01 - 2023-01-15",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  Text("${fmtDate2(start)} - ${fmtDate2(end)}",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white
                                   ),),
                                 ],
                               ),
                             ),
                           ),
-                          IconButton(onPressed: (){},color: Colors.white, icon: const Icon(Icons.calendar_month)),
+                          Theme(
+                            data: ThemeData(
+                              primarySwatch: Colors.green,
+                              primaryColor: Theme.of(context).primaryColor,
+                              appBarTheme: AppBarTheme(
+                                color: Theme.of(context).primaryColor
+                              )
+                            ),
+                            child: Builder(
+                              builder: (context) {
+                                return IconButton(onPressed: ()async {
+                                  var data = await showDateRangePicker(context: context,initialDateRange: DateTimeRange(start: start, end: end),initialEntryMode: DatePickerEntryMode.calendarOnly, firstDate: DateTime.now().subtract(const Duration(days: 365)), lastDate: DateTime.now());
+                                  if(data != null){
+                                    setState(() {
+                                      start = data.start;
+                                      end = data.end;
+                                    });
+                                  }
+                                },color: Colors.white, icon: const Icon(Icons.calendar_month));
+                              }
+                            ),
+                          ),
                         ],
                       ),
                       Card(
@@ -133,8 +156,8 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                 ),
                                 padding: const EdgeInsets.only(bottom: 20),
                                 margin: const EdgeInsets.only(bottom: 10),
-                                child: const Center(
-                                  child: Text("2,058,500",style: TextStyle(
+                                child:  Center(
+                                  child: Text(formatter.format(profit),style: const TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold
                                   ),),
@@ -145,12 +168,12 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: const [
-                                        Text("1,200940",style: TextStyle(
+                                      children: [
+                                        Text(formatter.format(income),style: const TextStyle(
                                           color: Color(0xff3C9343),
                                           fontWeight: FontWeight.bold
                                         ),),
-                                        Text("Income",style: TextStyle(
+                                        const Text("Income",style: TextStyle(
                                           color: Color(0xff3C9343),
                                         ),),
                                       ],
@@ -158,12 +181,12 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: const [
-                                      Text("1,200940",style: TextStyle(
+                                    children:  [
+                                      Text(formatter.format(expenses),style: const TextStyle(
                                           color: Color(0xffE44747),
                                           fontWeight: FontWeight.bold
                                       ),),
-                                      Text("Income",style: TextStyle(
+                                      const Text("Expenses",style: TextStyle(
                                         color: Color(0xffE44747),
                                       ),textAlign: TextAlign.end,),
                                     ],
@@ -179,13 +202,19 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                 ))
               ],
             ),
-            Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 300,child: incomeData != null && expensesData != null ? ReportBarChat(
+            Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 250,child: incomeData != null && expensesData != null ? BarChartSample2(
               incomeData: incomeData!,
               expenses: expensesData!,
             )
                 : const Center(child: CircularProgressIndicator())),),
 
-            TextButton(onPressed: goBack, child: const Text("Cancel"))
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black87
+              ),onPressed: goBack, child: const Text("Back To Home")),
+            )
           ],
         ),
       ),

@@ -54,6 +54,9 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
 
   String userKey = "user-key-val";
 
+
+  final formatter = NumberFormat.compact();
+
   static String? country;
   static String? tokenValue;
 
