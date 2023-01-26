@@ -34,7 +34,7 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
       "token":User.user?.token
     }),onValue: (obj,url){
       setState(() {
-        _farms = (obj['data'] as Iterable).map((e) => Farm.fromJson(e)).toList();
+        _farms = (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
       });
     });
   }

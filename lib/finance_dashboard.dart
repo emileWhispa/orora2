@@ -34,7 +34,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
         onValue: (obj, url) {
           setState(() {
             _farms =
-                (obj['data'] as Iterable).map((e) => Farm.fromJson(e)).toList();
+                (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
             if(_farm == null && _farms.isNotEmpty){
               _farm = _farms.first;
               loadData();
@@ -174,7 +174,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("${fmtNbr(expenses)} RWF",style: const TextStyle(
+                                          Text("${formatter.format(expenses)} RWF",style: const TextStyle(
                                               color: Color(0xffD80404),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700
@@ -195,7 +195,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children:  [
-                                          Text("${fmtNbr(income)} RWF",style: const TextStyle(
+                                          Text("${formatter.format(income)} RWF",style: const TextStyle(
                                               color: Color(0xff3C9343),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700

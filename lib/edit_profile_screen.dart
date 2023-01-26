@@ -94,18 +94,18 @@ class _EditProfileScreenState extends Superbase<EditProfileScreen> {
                     data: ThemeData(),
                     child: ListView(
                       children: [
-                        const Center(
+                         Center(
                           child: CircleAvatar(
                             radius: 40,
-                            child: Text("D H"),
+                            child: Text(User.user?.initials??""),
                           ),
                         ),
-                        const Center(
+                         Center(
                             child: Padding(
-                          padding: EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: Text(
-                            "Dev Hubert",
-                            style: TextStyle(
+                            User.user?.display??"",
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 24),
                           ),
                         )),

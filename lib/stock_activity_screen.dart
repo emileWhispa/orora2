@@ -48,7 +48,7 @@ class _StockActivityScreenState extends Superbase<StockActivityScreen> {
           setState(() {
             _feed = null;
             _feeds =
-                (s['data'] as Iterable).map((e) => Feed.fromJson(e)).toList();
+                (s['data'] as Iterable?)?.map((e) => Feed.fromJson(e)).toList() ?? [];
             if(!reload){
               _feeds.add(Feed(null,id: unique));
             }

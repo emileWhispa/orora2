@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:orora2/edit_profile_screen.dart';
+import 'package:orora2/json/user.dart';
 import 'package:orora2/super_base.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -37,16 +38,16 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
           ),
           child: ListView(
             children: [
-              const Center(
+              Center(
                 child: CircleAvatar(
                   radius: 40,
-                  child: Text("D H"),
+                  child: Text(User.user?.initials??""),
                 ),
               ),
 
-              const Center(child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text("Dev Hubert",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
+               Center(child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(User.user?.display??"",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
               )),
               Card(
                 elevation: 0,
