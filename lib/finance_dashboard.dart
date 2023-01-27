@@ -244,7 +244,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                             Text(item.category??"",style: const TextStyle(fontSize: 18),),
-                          Text(". ${fmtNbr(item.amount)} RWF",style: TextStyle(
+                          Text("${fmtNbr(item.amount)} RWF",style: TextStyle(
                             color: color
                           ),)
                         ],

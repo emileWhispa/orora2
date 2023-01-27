@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orora2/bar_chat_sample.dart';
+import 'package:orora2/expenses_list.dart';
 import 'package:orora2/farm_list_screen.dart';
 import 'package:orora2/feeds_screen.dart';
+import 'package:orora2/income_list.dart';
 import 'package:orora2/json/user.dart';
 import 'package:orora2/report_screen.dart';
 import 'package:orora2/search_delegate.dart';
@@ -141,47 +143,57 @@ class _DashboardState extends Superbase<Dashboard> {
                           padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 30),
                           child: Row(
                             children: [
-                              Expanded(child: Row(
-                                children: [
-                                  Image.asset("assets/expenses.png"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("${formatter.format(expenses)} RWF",style: const TextStyle(
-                                            color: Color(0xffD80404),
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w700
-                                          ),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                          const Text("Expenses")
-                                        ],
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const ExpensesList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/expenses.png"),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${formatter.format(expenses)} RWF",style: const TextStyle(
+                                              color: Color(0xffD80404),
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w700
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                            const Text("Expenses")
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               )),
-                              Expanded(child: Row(
-                                children: [
-                                  Image.asset("assets/sales.png"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("${formatter.format(sales)} RWF",style: const TextStyle(
-                                            color: Color(0xff3C9343),
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w700
-                                          ),maxLines: 1,overflow: TextOverflow.ellipsis),
-                                          const Text("Sales")
-                                        ],
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const IncomeList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/sales.png"),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${formatter.format(sales)} RWF",style: const TextStyle(
+                                              color: Color(0xff3C9343),
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w700
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                            const Text("Sales")
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ))
                             ],
                           ),
