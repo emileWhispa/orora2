@@ -69,37 +69,37 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
                           children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Color(0xffDADADA)
-                                      )
-                                  )
-                              ),
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(radius:20,child: Icon(Icons.business),),
-                                  Expanded(child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: const [
-                                        Text("Account Information",style: TextStyle(
-                                            fontSize: 16
-                                        ),),
-                                        SizedBox(height: 5,),
-                                        Text("Business Type",style: TextStyle(
-                                            color: Color(0xff01A02D)
-                                        ),),
-                                      ],
-                                    ),
-                                  )),
-                                  const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
-                                ],
-                              ),
-                            ),
+                            // Container(
+                            //   decoration: const BoxDecoration(
+                            //       border: Border(
+                            //           bottom: BorderSide(
+                            //               color: Color(0xffDADADA)
+                            //           )
+                            //       )
+                            //   ),
+                            //   padding: const EdgeInsets.symmetric(vertical: 5),
+                            //   child: Row(
+                            //     children: [
+                            //       const CircleAvatar(radius:20,child: Icon(Icons.business),),
+                            //       Expanded(child: Padding(
+                            //         padding: const EdgeInsets.all(8.0),
+                            //         child: Column(
+                            //           crossAxisAlignment: CrossAxisAlignment.stretch,
+                            //           children: const [
+                            //             Text("Account Information",style: TextStyle(
+                            //                 fontSize: 16
+                            //             ),),
+                            //             SizedBox(height: 5,),
+                            //             Text("Business Type",style: TextStyle(
+                            //                 color: Color(0xff01A02D)
+                            //             ),),
+                            //           ],
+                            //         ),
+                            //       )),
+                            //       const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                            //     ],
+                            //   ),
+                            // ),
                             Container(
                               decoration: const BoxDecoration(
                                   border: Border(
