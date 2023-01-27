@@ -7,7 +7,8 @@ import 'package:orora2/super_base.dart';
 class BarChartSample2 extends StatefulWidget {
   final Map incomeData;
   final Map expenses;
-  const BarChartSample2({super.key, required this.incomeData, required this.expenses});
+  final String title;
+  const BarChartSample2({super.key, required this.incomeData, required this.expenses, required this.title});
 
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
@@ -69,84 +70,94 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Theme.of(context).primaryColorLight,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 5).copyWith(bottom: 0),
-          child: BarChart(
-            BarChartData(
-              maxY: maxY,
-              barTouchData: BarTouchData(
-                touchTooltipData: BarTouchTooltipData(
-                  tooltipBgColor: Colors.grey,
-                  getTooltipItem: (a, b, c, d) => null,
-                ),
-                touchCallback: (FlTouchEvent event, response) {
-                  if (response == null || response.spot == null) {
-                    setState(() {
-                      touchedGroupIndex = -1;
-                      showingBarGroups = List.of(rawBarGroups);
-                    });
-                    return;
-                  }
-
-                  touchedGroupIndex = response.spot!.touchedBarGroupIndex;
-
-                  setState(() {
-                    if (!event.isInterestedForInteractions) {
-                      touchedGroupIndex = -1;
-                      showingBarGroups = List.of(rawBarGroups);
-                      return;
-                    }
-                    showingBarGroups = List.of(rawBarGroups);
-                    if (touchedGroupIndex != -1) {
-                      var sum = 0.0;
-                      for (final rod
-                          in showingBarGroups[touchedGroupIndex].barRods) {
-                        sum += rod.toY;
-                      }
-                      final avg = sum /
-                          showingBarGroups[touchedGroupIndex].barRods.length;
-
-                      showingBarGroups[touchedGroupIndex] =
-                          showingBarGroups[touchedGroupIndex].copyWith(
-                        barRods: showingBarGroups[touchedGroupIndex]
-                            .barRods
-                            .map((rod) {
-                          return rod.copyWith(toY: avg);
-                        }).toList(),
-                      );
-                    }
-                  });
-                },
+          padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 10).copyWith(bottom: 0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.title),
               ),
-              titlesData: FlTitlesData(
-                show: true,
-                rightTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                topTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    getTitlesWidget: bottomTitles,
-                    reservedSize: 42,
+              Expanded(
+                child: BarChart(
+                  BarChartData(
+                    maxY: maxY,
+                    barTouchData: BarTouchData(
+                      touchTooltipData: BarTouchTooltipData(
+                        tooltipBgColor: Colors.grey,
+                        getTooltipItem: (a, b, c, d) => null,
+                      ),
+                      touchCallback: (FlTouchEvent event, response) {
+                        if (response == null || response.spot == null) {
+                          setState(() {
+                            touchedGroupIndex = -1;
+                            showingBarGroups = List.of(rawBarGroups);
+                          });
+                          return;
+                        }
+
+                        touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+
+                        setState(() {
+                          if (!event.isInterestedForInteractions) {
+                            touchedGroupIndex = -1;
+                            showingBarGroups = List.of(rawBarGroups);
+                            return;
+                          }
+                          showingBarGroups = List.of(rawBarGroups);
+                          if (touchedGroupIndex != -1) {
+                            var sum = 0.0;
+                            for (final rod
+                                in showingBarGroups[touchedGroupIndex].barRods) {
+                              sum += rod.toY;
+                            }
+                            final avg = sum /
+                                showingBarGroups[touchedGroupIndex].barRods.length;
+
+                            showingBarGroups[touchedGroupIndex] =
+                                showingBarGroups[touchedGroupIndex].copyWith(
+                              barRods: showingBarGroups[touchedGroupIndex]
+                                  .barRods
+                                  .map((rod) {
+                                return rod.copyWith(toY: avg);
+                              }).toList(),
+                            );
+                          }
+                        });
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      show: true,
+                      rightTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: bottomTitles,
+                          reservedSize: 42,
+                        ),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 39,
+                          interval: maxY/4,
+                          getTitlesWidget: leftTitles,
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    barGroups: showingBarGroups,
+                    gridData: FlGridData(show: false),
                   ),
                 ),
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 39,
-                    interval: maxY/4,
-                    getTitlesWidget: leftTitles,
-                  ),
-                ),
               ),
-              borderData: FlBorderData(
-                show: false,
-              ),
-              barGroups: showingBarGroups,
-              gridData: FlGridData(show: false),
-            ),
+            ],
           ),
         ),
       ),

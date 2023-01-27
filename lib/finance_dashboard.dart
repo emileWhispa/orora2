@@ -224,33 +224,164 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        children:  [
-                          TextSpan(text: item.name??"",style: TextStyle(color: color),),
-                          TextSpan(text: ". ${item.date}",),
-                        ]
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                            Text(item.category??"",style: const TextStyle(fontSize: 18),),
-                          Text("${fmtNbr(item.amount)} RWF",style: TextStyle(
-                            color: color
-                          ),)
-                        ],
-                      ),
+              child: InkWell(
+                onTap: (){
+                  showModalBottomSheet(context: context,shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)
                     )
-                  ],
+                  ), builder: (context){
+                    return Container(
+                      padding: const EdgeInsets.all(20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(15.0),
+                                child: Text("Transaction details",style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    style: BorderStyle.solid,
+                                      color: Colors.grey.shade300
+                                  )
+                                )
+                              ),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Text("Category")),
+                                  Text(item.category??""),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    style: BorderStyle.solid,
+                                      color: Colors.grey.shade300
+                                  )
+                                )
+                              ),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Text("Date")),
+                                  Text(item.date),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    style: BorderStyle.solid,
+                                      color: Colors.grey.shade300
+                                  )
+                                )
+                              ),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Text("Transaction")),
+                                  Text(item.name??""),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    style: BorderStyle.solid,
+                                    color: Colors.grey.shade300
+                                  )
+                                )
+                              ),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Text("Amount")),
+                                  Text(fmtNbr(item.amount)),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: const BoxDecoration(
+                              ),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Text("Description")),
+                                  Text(item.notes??""),
+                                ],
+                              ),
+                            ),
+                            SafeArea(
+                              top: false,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 11,
+                                      horizontal: 35
+                                    ),
+                                    backgroundColor: const Color(0xffD4F6EB),
+                                    foregroundColor: Colors.black87
+                                  ), child: const Text("Edit")),
+                                  ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 11,
+                                          horizontal: 40
+                                      ),
+                                    backgroundColor: const Color(0xffFBC1C1),
+                                      foregroundColor: Colors.black87
+                                  ), child: const Text("Delete")),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          children:  [
+                            TextSpan(text: item.name??"",style: TextStyle(color: color),),
+                            TextSpan(text: ". ${item.date}",),
+                          ]
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                              Text(item.category??"",style: const TextStyle(fontSize: 18),),
+                            Text("${fmtNbr(item.amount)} RWF",style: TextStyle(
+                              color: color
+                            ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

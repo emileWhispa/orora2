@@ -226,7 +226,7 @@ class _DashboardState extends Superbase<Dashboard> {
                             ),textAlign: TextAlign.center,),
                              Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(myFarms),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
+                              child: Text(formatter.format(myFarms),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
                                   fontSize: 35,
                                 fontWeight: FontWeight.w700
                               ),),
@@ -255,7 +255,7 @@ class _DashboardState extends Superbase<Dashboard> {
                             ),textAlign: TextAlign.center,),
                              Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(feeds),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
+                              child: Text(formatter.format(feeds),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
                                   fontSize: 35,
                                 fontWeight: FontWeight.w700
                               ),),
@@ -284,7 +284,7 @@ class _DashboardState extends Superbase<Dashboard> {
                             ),textAlign: TextAlign.center,),
                              Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(farmProduction),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
+                              child: Text(formatter.format(farmProduction),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
                                   fontSize: 35,
                                 fontWeight: FontWeight.w700
                               ),),
@@ -299,6 +299,7 @@ class _DashboardState extends Superbase<Dashboard> {
               ),
             ),
             Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 220,child: incomeData != null && expensesData != null ? BarChartSample2(
+              title: "Daily Transactions",
               incomeData: incomeData!,
               expenses: expensesData!,
             )

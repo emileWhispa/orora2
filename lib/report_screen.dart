@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/expenses_list.dart';
+import 'package:orora2/income_list.dart';
 import 'package:orora2/report_bar_chart.dart';
 import 'package:orora2/super_base.dart';
 
@@ -166,30 +168,40 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(formatter.format(income),style: const TextStyle(
-                                          color: Color(0xff3C9343),
-                                          fontWeight: FontWeight.bold
-                                        ),),
-                                        const Text("Income",style: TextStyle(
-                                          color: Color(0xff3C9343),
-                                        ),),
-                                      ],
+                                    child: InkWell(
+                                      onTap: (){
+                                        push(const IncomeList());
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(formatter.format(income),style: const TextStyle(
+                                            color: Color(0xff3C9343),
+                                            fontWeight: FontWeight.bold
+                                          ),),
+                                          const Text("Income",style: TextStyle(
+                                            color: Color(0xff3C9343),
+                                          ),),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children:  [
-                                      Text(formatter.format(expenses),style: const TextStyle(
+                                  InkWell(
+                                    onTap: (){
+                                      push(const ExpensesList());
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children:  [
+                                        Text(formatter.format(expenses),style: const TextStyle(
+                                            color: Color(0xffE44747),
+                                            fontWeight: FontWeight.bold
+                                        ),),
+                                        const Text("Expenses",style: TextStyle(
                                           color: Color(0xffE44747),
-                                          fontWeight: FontWeight.bold
-                                      ),),
-                                      const Text("Expenses",style: TextStyle(
-                                        color: Color(0xffE44747),
-                                      ),textAlign: TextAlign.end,),
-                                    ],
+                                        ),textAlign: TextAlign.end,),
+                                      ],
+                                    ),
                                   )
                                 ],
                               )
@@ -203,6 +215,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
               ],
             ),
             Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 250,child: incomeData != null && expensesData != null ? BarChartSample2(
+              title: "Daily Transactions",
               incomeData: incomeData!,
               expenses: expensesData!,
             )
