@@ -66,16 +66,27 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
     return AspectRatio(
       aspectRatio: 1,
       child: Card(
-        elevation: 0,
+        elevation: 6,
+        shadowColor: Colors.black45,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         color: Theme.of(context).primaryColorLight,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 10).copyWith(bottom: 0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(widget.title),
+                padding: const EdgeInsets.symmetric(vertical: 15).copyWith(bottom: 25,right: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(widget.title,style: const TextStyle(
+                        fontWeight: FontWeight.bold
+                      ),),
+                    ),
+                    const Text("7 days")
+                  ],
+                ),
               ),
               Expanded(
                 child: BarChart(

@@ -41,9 +41,12 @@ class _ReportScreenState extends Superbase<ReportScreen> {
 
   Future<void> loadData(){
     return ajax(url: "reports/",method: "POST",data: FormData.fromMap({
-      "token":User.user?.token
+      "token":User.user?.token,
+      "from":fmtDate2(start),
+      "to":fmtDate2(end),
     }),onValue: (s,v){
-      if(s['code'] == 200) {
+      print(s);
+      if(s['code'] == 200 && mounted && s['chart'] is Map) {
         setState(() {
           incomeData = s['chart']['income'];
           expensesData = s['chart']['expenses'];
@@ -76,7 +79,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
             Stack(
               children: [
                 Container(
-                  height: 330,
+                  height: 290,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -123,6 +126,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                     setState(() {
                                       start = data.start;
                                       end = data.end;
+                                      loadData();
                                     });
                                   }
                                 },color: Colors.white, icon: const Icon(Icons.calendar_month));
@@ -132,14 +136,14 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                         ],
                       ),
                       Card(
-                        margin: EdgeInsets.zero.copyWith(top: 20),
+                        margin: EdgeInsets.zero.copyWith(top: 10),
                         elevation: 12,
                         shadowColor: Colors.black26,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -166,29 +170,28 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: (){
-                                        push(const IncomeList());
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(formatter.format(income),style: const TextStyle(
-                                            color: Color(0xff3C9343),
-                                            fontWeight: FontWeight.bold
-                                          ),),
-                                          const Text("Income",style: TextStyle(
-                                            color: Color(0xff3C9343),
-                                          ),),
-                                        ],
-                                      ),
+                                  InkWell(
+                                    onTap: (){
+                                      push(IncomeList(start: start,end: end,));
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(formatter.format(income),style: const TextStyle(
+                                          color: Color(0xff3C9343),
+                                          fontWeight: FontWeight.bold
+                                        ),),
+                                        const Text("Income",style: TextStyle(
+                                          color: Color(0xff3C9343),
+                                        ),),
+                                      ],
                                     ),
                                   ),
                                   InkWell(
                                     onTap: (){
-                                      push(const ExpensesList());
+                                      push(ExpensesList(start: start,end: end,));
                                     },
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -214,7 +217,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                 ))
               ],
             ),
-            Padding(padding: const EdgeInsets.all(15),child: SizedBox(height: 250,child: incomeData != null && expensesData != null ? BarChartSample2(
+            Padding(padding: const EdgeInsets.all(15).copyWith(top: 5),child: SizedBox(height: 250,child: incomeData != null && expensesData != null ? BarChartSample2(
               title: "Daily Transactions",
               incomeData: incomeData!,
               expenses: expensesData!,

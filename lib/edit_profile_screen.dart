@@ -91,7 +91,17 @@ class _EditProfileScreenState extends Superbase<EditProfileScreen> {
                 child: Form(
                   key: _key,
                   child: Theme(
-                    data: ThemeData(),
+                    data: ThemeData(
+                      primaryColor: Theme.of(context).primaryColor,
+                      primarySwatch: Colors.green,
+                      inputDecorationTheme: InputDecorationTheme(
+                          enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300
+                          )
+                        )
+                      )
+                    ),
                     child: ListView(
                       children: [
                          Center(

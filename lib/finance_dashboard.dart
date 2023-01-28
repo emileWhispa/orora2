@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/expenses_list.dart';
 import 'package:orora2/json/user.dart';
 import 'package:orora2/super_base.dart';
 import 'package:orora2/transaction_registration.dart';
 
+import 'income_list.dart';
 import 'json/farm.dart';
 import 'json/transaction.dart';
 
@@ -87,7 +89,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor
                   ),
-                  height: 200,
+                  height: 175,
                 ),
                 Positioned.fill(child: Padding(
                   padding: const EdgeInsets.all(15.0).copyWith(top: MediaQuery.of(context).padding.top),
@@ -160,52 +162,64 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                         ],
                       ),
                       Card(
+                        elevation: 12,
+                        shadowColor: Colors.black26,
                         margin: EdgeInsets.zero.copyWith(top: 20),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
                           child: Row(
                             children: [
-                              Expanded(child: Row(
-                                children: [
-                                  Image.asset("assets/expenses.png"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("${formatter.format(expenses)} RWF",style: const TextStyle(
-                                              color: Color(0xffD80404),
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w700
-                                          ),),
-                                          const Text("Expenses")
-                                        ],
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const IncomeList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/sales.png"),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children:  [
+                                            Text("${formatter.format(income)} RWF",style: const TextStyle(
+                                                color: Color(0xff3C9343),
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w700
+                                            ),),
+                                            const Text("Income")
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               )),
-                              Expanded(child: Row(
-                                children: [
-                                  Image.asset("assets/sales.png"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children:  [
-                                          Text("${formatter.format(income)} RWF",style: const TextStyle(
-                                              color: Color(0xff3C9343),
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w700
-                                          ),),
-                                          const Text("Income")
-                                        ],
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const ExpensesList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/expenses.png"),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${formatter.format(expenses)} RWF",style: const TextStyle(
+                                                color: Color(0xffD80404),
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w700
+                                            ),),
+                                            const Text("Expenses")
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ))
                             ],
                           ),
@@ -225,134 +239,9 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Card(
               child: InkWell(
-                onTap: (){
-                  showModalBottomSheet(context: context,shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)
-                    )
-                  ), builder: (context){
-                    return Container(
-                      padding: const EdgeInsets.all(20),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(15.0),
-                                child: Text("Transaction details",style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                                ),),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                      color: Colors.grey.shade300
-                                  )
-                                )
-                              ),
-                              child: Row(
-                                children: [
-                                  const Expanded(child: Text("Category")),
-                                  Text(item.category??""),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                      color: Colors.grey.shade300
-                                  )
-                                )
-                              ),
-                              child: Row(
-                                children: [
-                                  const Expanded(child: Text("Date")),
-                                  Text(item.date),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                      color: Colors.grey.shade300
-                                  )
-                                )
-                              ),
-                              child: Row(
-                                children: [
-                                  const Expanded(child: Text("Transaction")),
-                                  Text(item.name??""),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Colors.grey.shade300
-                                  )
-                                )
-                              ),
-                              child: Row(
-                                children: [
-                                  const Expanded(child: Text("Amount")),
-                                  Text(fmtNbr(item.amount)),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: const BoxDecoration(
-                              ),
-                              child: Row(
-                                children: [
-                                  const Expanded(child: Text("Description")),
-                                  Text(item.notes??""),
-                                ],
-                              ),
-                            ),
-                            SafeArea(
-                              top: false,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 11,
-                                      horizontal: 35
-                                    ),
-                                    backgroundColor: const Color(0xffD4F6EB),
-                                    foregroundColor: Colors.black87
-                                  ), child: const Text("Edit")),
-                                  ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 11,
-                                          horizontal: 40
-                                      ),
-                                    backgroundColor: const Color(0xffFBC1C1),
-                                      foregroundColor: Colors.black87
-                                  ), child: const Text("Delete")),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  });
+                onTap: ()async{
+                  await showTransactionDetails(item, context);
+                  _key.currentState?.show();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -387,6 +276,186 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
             ),
           );
         }),
+      ),
+    );
+  }
+}
+
+
+
+Future<void> showTransactionDetails(Transaction item,BuildContext context){
+  return showModalBottomSheet(context: context,shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20)
+        )
+    ), builder: (context){
+      return TransactionDetails(transaction: item);
+    });
+}
+
+
+class TransactionDetails extends StatefulWidget{
+  final Transaction transaction;
+  const TransactionDetails({super.key, required this.transaction});
+
+  @override
+  State<TransactionDetails> createState() => _TransactionDetailsState();
+}
+
+class _TransactionDetailsState extends Superbase<TransactionDetails> {
+
+  bool loading = false;
+
+  void deleteTransaction()async{
+    setState(() {
+      loading = true;
+    });
+    await ajax(url: "finance/deleteTransaction",method: "POST",data: FormData.fromMap({
+      "transaction_id":widget.transaction.id,
+      "token": User.user?.token
+    }),onValue: (s,v){
+      if(s['code'] == 200){
+        goBack();
+      }
+      showSnack(s['message']);
+    });
+    setState(() {
+      loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var item = widget.transaction;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: loading ? const Center(
+        child: CircularProgressIndicator(),
+      ) : SingleChildScrollView(
+        child: Column(
+          children: [
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text("Transaction details",style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          style: BorderStyle.solid,
+                          color: Colors.grey.shade300
+                      )
+                  )
+              ),
+              child: Row(
+                children: [
+                  const Expanded(child: Text("Category")),
+                  Text(item.category??""),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          style: BorderStyle.solid,
+                          color: Colors.grey.shade300
+                      )
+                  )
+              ),
+              child: Row(
+                children: [
+                  const Expanded(child: Text("Date")),
+                  Text(item.date),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          style: BorderStyle.solid,
+                          color: Colors.grey.shade300
+                      )
+                  )
+              ),
+              child: Row(
+                children: [
+                  const Expanded(child: Text("Transaction")),
+                  Text(item.name??""),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          style: BorderStyle.solid,
+                          color: Colors.grey.shade300
+                      )
+                  )
+              ),
+              child: Row(
+                children: [
+                  const Expanded(child: Text("Amount")),
+                  Text(fmtNbr(item.amount)),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+              ),
+              child: Row(
+                children: [
+                  const Expanded(child: Text("Description")),
+                  Text(item.notes??""),
+                ],
+              ),
+            ),
+            SafeArea(
+              top: false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(onPressed: ()async{
+                    await push(TransactionRegistration(transaction: item,));
+                    goBack();
+                  },style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 11,
+                          horizontal: 35
+                      ),
+                      backgroundColor: const Color(0xffD4F6EB),
+                      foregroundColor: Colors.black87
+                  ), child: const Text("Edit")),
+                  ElevatedButton(onPressed: ()async{
+                    var x = await confirmDialog(context);
+                    if(x == true){
+                      deleteTransaction();
+                    }
+                  },style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 11,
+                          horizontal: 40
+                      ),
+                      backgroundColor: const Color(0xffFBC1C1),
+                      foregroundColor: Colors.black87
+                  ), child: const Text("Delete")),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
