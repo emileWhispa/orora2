@@ -83,7 +83,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
             return Stack(
               children: [
                 Container(
-                  height: 260,
+                  height: 250,
                 ),
                 Container(
                   decoration: BoxDecoration(

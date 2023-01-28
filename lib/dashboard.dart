@@ -161,7 +161,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700
                                             ),maxLines: 1,overflow: TextOverflow.ellipsis),
-                                            const Text("Sales")
+                                            const Text("Income")
                                           ],
                                         ),
                                       ),
@@ -310,6 +310,17 @@ class _DashboardState extends Superbase<Dashboard> {
                 height: 200,
                 child: Row(
                   children: [
+                    Expanded(child: Card(child: InkWell(onTap: (){
+                      push(const ReportScreen());
+                    },child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text("Reports",style: Theme.of(context).textTheme.titleLarge,),
+                          Expanded(child: Image.asset("assets/reports.png")),
+                        ],
+                      ),
+                    )))),
                     Expanded(child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       child: Padding(
@@ -324,18 +335,7 @@ class _DashboardState extends Superbase<Dashboard> {
                           ],
                         ),
                       ),
-                    )),
-                    Expanded(child: Card(child: InkWell(onTap: (){
-                      push(const ReportScreen());
-                    },child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text("Reports",style: Theme.of(context).textTheme.titleLarge,),
-                          Expanded(child: Image.asset("assets/reports.png")),
-                        ],
-                      ),
-                    ))))
+                    ))
                   ],
                 ),
               ),
