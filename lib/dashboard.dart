@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/expenses_list.dart';
 import 'package:orora2/farm_list_screen.dart';
@@ -82,7 +81,7 @@ class _DashboardState extends Superbase<Dashboard> {
             Stack(
               children: [
                 Container(
-                  height: 230,
+                  height: 236,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -133,7 +132,7 @@ class _DashboardState extends Superbase<Dashboard> {
                         ],
                       ),
                       Card(
-                        margin: EdgeInsets.zero.copyWith(top: 9),
+                        margin: EdgeInsets.zero.copyWith(top: 15),
                         elevation: 12,
                         shadowColor: Colors.black26,
                         shape: RoundedRectangleBorder(
