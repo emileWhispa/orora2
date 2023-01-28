@@ -227,7 +227,7 @@ class _DashboardState extends Superbase<Dashboard> {
                              Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(formatter.format(myFarms),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
+                                  fontSize: 25,
                                 fontWeight: FontWeight.w700
                               ),),
                             ),
@@ -256,7 +256,7 @@ class _DashboardState extends Superbase<Dashboard> {
                              Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(formatter.format(feeds),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
+                                  fontSize: 25,
                                 fontWeight: FontWeight.w700
                               ),),
                             ),
@@ -285,7 +285,7 @@ class _DashboardState extends Superbase<Dashboard> {
                              Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(formatter.format(farmProduction),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
+                                  fontSize: 25,
                                 fontWeight: FontWeight.w700
                               ),),
                             ),

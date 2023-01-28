@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:orora2/stock_activity_screen.dart';
 import 'package:orora2/super_base.dart';
 
+import 'json/feed.dart';
 import 'json/user.dart';
 
 class FeedsScreen extends StatefulWidget{
@@ -23,6 +24,7 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
   int out = 0;
   int inFeeds = 0;
   int expiring = 0;
+  List<Feed> _list = [];
 
 
   @override
@@ -33,7 +35,18 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
     super.initState();
   }
 
+  void loadFeeds(){
+    ajax(url: "feeds/activities",method: "POST",data: FormData.fromMap({
+      "token":User.user?.token,
+    }),onValue: (s,v){
+      setState(() {
+        _list = (s['data'] as Iterable?)?.map((e) => Feed.fromJson(e)).toList() ?? [];
+      });
+    });
+  }
+
   Future<void> loadData(){
+    loadFeeds();
     return ajax(url: "feeds/overview",method: "POST",data: FormData.fromMap({
       "token":User.user?.token,
     }),onValue: (s,v){
@@ -47,37 +60,46 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
     });
   }
 
+  final _key = GlobalKey<RefreshIndicatorState>();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Overview"),
+        centerTitle: false,
+        title: const Text("Overview",style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold
+        ),),
         actions: [
-          IconButton(onPressed: (){
-            push(const StockActivityScreen());
+          IconButton(onPressed: ()async{
+            await push(const StockActivityScreen());
+            _key.currentState?.show();
           }, icon: const Icon(Icons.add))
         ],
       ),
       body: RefreshIndicator(
+        key: _key,
         onRefresh: loadData,
         child: ListView(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15).copyWith(top: 0),
           children: [
             Card(
+              elevation: 9,
+              shadowColor: Colors.black26,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10)
               ),
-              elevation: 2,
               child: Column(
                 children: [
                   Container(
                     decoration: const BoxDecoration(
                       color: Color(0xff86B906)
                     ),
-                    padding: const EdgeInsets.all(25),
+                    padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
                     child: Row(
                       children: [
                         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,children: [
@@ -122,10 +144,11 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 40),
+                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 25),
                     child: Row(
                       children: [
                         Expanded(child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               decoration: const BoxDecoration(
@@ -152,6 +175,7 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                           ],
                         )),
                         Expanded(child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               decoration: const BoxDecoration(
@@ -170,7 +194,7 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                                     fontWeight: FontWeight.w700
                                   )),
                                   const TextSpan(text: " Out",style: TextStyle(
-                                    color: Color(0xff4F76A6)
+                                    color: Color(0xff4F76A6),
                                   )),
                                 ]
                               ),),
@@ -209,135 +233,251 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0),
-              child: Row(
-                children: [
-                  Expanded(child: SizedBox(
-                    height: 200,
-                    child: Card(clipBehavior: Clip.antiAliasWithSaveLayer,shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),child: InkWell(
-                      onTap: (){
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("My Farms",style: TextStyle(
-                                fontSize: 14
-                            ),textAlign: TextAlign.center,),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(myFarms),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ),
-                            Expanded(child: Image.asset("assets/goat.png")),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                children: const [
-                                  Icon(Icons.signpost,size: 13,),
-                                  Text("Kayonza, Gahini",style: TextStyle(
-                                    fontSize: 12
+            Card(
+              elevation: 5,
+              shadowColor: Colors.black26,
+              margin: const EdgeInsets.all(4).copyWith(top: 20),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text("Recent Activities",style: TextStyle(
+                        color: Color(0xffACAFB0),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold
+                      ),),
+                    ),
+                    Column(
+                      children: _list.asMap().map((k,e) => MapEntry(k, Container(
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: k == _list.length-1 ? Colors.transparent : Colors.grey.shade300
+                                )
+                            )
+                        ),
+                        child: InkWell(
+                          onTap: (){
+                            showFeedDetails(e, context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(children: [
+                              Expanded(child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(e.activityDate??""),
+                                  Text(e.name??""),
+                                ],
+                              )),Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(e.activity??"",style: TextStyle(
+                                    fontSize: 14,
+                                      color: e.activity == 'In' ? const Color(0xff4F76A6) : const Color(0xffE44747)
+                                  ),),
+                                  Text(fmtNbr(e.activityQty),style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: e.activity == 'In' ? const Color(0xff4F76A6) : const Color(0xffE44747)
                                   ),),
                                 ],
-                              ),
-                            ),
-                          ],
+                              )
+                            ],),
+                          ),
                         ),
-                      ),
-                    ),),
-                  )),
-                  Expanded(child: SizedBox(
-                    height: 200,
-                    child: Card(shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),child: InkWell(
-                      onTap: (){
-
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Feeds",style: TextStyle(
-                                fontSize: 14
-                            ),textAlign: TextAlign.center,),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(feeds),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ),
-                            Expanded(child: Image.asset("assets/cow.png")),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                children: const [
-                                  Icon(Icons.signpost,size: 13,),
-                                  Text("Kayonza, Gahini",style: TextStyle(
-                                      fontSize: 12
-                                  ),),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),),
-                  )),
-                  Expanded(child: SizedBox(
-                    height: 200,
-                    child: Card(shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),child: InkWell(
-                      onTap: (){
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Farm Production",style: TextStyle(
-                                fontSize: 14
-                            ),textAlign: TextAlign.center,),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(fmtNbr(farmProduction),maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w700
-                              ),),
-                            ),
-                            Expanded(child: Image.asset("assets/cow.png")),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                children: const [
-                                  Icon(Icons.signpost,size: 13,),
-                                  Text("Kayonza, Gahini",style: TextStyle(
-                                      fontSize: 12
-                                  ),),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),),
-                  )),
-                ],
+                      ))).values.toList(),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+Future<void> showFeedDetails(Feed item,BuildContext context){
+  return showModalBottomSheet(context: context,shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20)
+      )
+  ), builder: (context){
+    return FeedDetails(feed: item);
+  });
+}
+
+
+class FeedDetails extends StatefulWidget{
+  final Feed feed;
+  const FeedDetails({super.key, required this.feed});
+
+  @override
+  State<FeedDetails> createState() => _FeedDetailsState();
+}
+
+class _FeedDetailsState extends Superbase<FeedDetails> {
+
+  bool loading = false;
+
+  void deleteTransaction()async{
+    setState(() {
+      loading = true;
+    });
+    await ajax(url: "finance/deleteTransaction",method: "POST",data: FormData.fromMap({
+      "transaction_id":widget.feed.id,
+      "token": User.user?.token
+    }),onValue: (s,v){
+      if(s['code'] == 200){
+        goBack();
+      }
+      showSnack(s['message']);
+    });
+    setState(() {
+      loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var item = widget.feed;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: loading ? const Center(
+        child: CircularProgressIndicator(),
+      ) : SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text("Activity details",style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  ),),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.grey.shade300
+                        )
+                    )
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text("Feed Name")),
+                    Text(item.name??""),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.grey.shade300
+                        )
+                    )
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text("Activity Date")),
+                    Text(item.activityDate??""),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.grey.shade300
+                        )
+                    )
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text("Activity")),
+                    Text(item.activity??""),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.grey.shade300
+                        )
+                    )
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text("Activity Quantity")),
+                    Text(fmtNbr(item.activityQty)),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: const BoxDecoration(
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text("Description")),
+                    Text(item.notes??""),
+                  ],
+                ),
+              ),
+              // SafeArea(
+              //   top: false,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       ElevatedButton(onPressed: ()async{
+              //         // await push(TransactionRegistration(transaction: item,));
+              //         // goBack();
+              //       },style: ElevatedButton.styleFrom(
+              //           padding: const EdgeInsets.symmetric(
+              //               vertical: 11,
+              //               horizontal: 35
+              //           ),
+              //           backgroundColor: const Color(0xffD4F6EB),
+              //           foregroundColor: Colors.black87
+              //       ), child: const Text("Edit")),
+              //       ElevatedButton(onPressed: ()async{
+              //         var x = await confirmDialog(context);
+              //         if(x == true){
+              //           deleteTransaction();
+              //         }
+              //       },style: ElevatedButton.styleFrom(
+              //           padding: const EdgeInsets.symmetric(
+              //               vertical: 11,
+              //               horizontal: 40
+              //           ),
+              //           backgroundColor: const Color(0xffFBC1C1),
+              //           foregroundColor: Colors.black87
+              //       ), child: const Text("Delete")),
+              //     ],
+              //   ),
+              // )
+            ],
+          ),
         ),
       ),
     );
