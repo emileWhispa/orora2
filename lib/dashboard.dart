@@ -81,7 +81,7 @@ class _DashboardState extends Superbase<Dashboard> {
             Stack(
               children: [
                 Container(
-                  height: 236,
+                  height: 238,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -95,23 +95,25 @@ class _DashboardState extends Superbase<Dashboard> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(message,style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    color: Colors.white
-                                  ),),
-                                  Text("This is how your business is doing",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Colors.white
-                                  ),),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Expanded(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(right: 8),
+                          //     child: Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         Text(message,style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          //           color: Colors.white
+                          //         ),),
+                          //         Text("This is how your business is doing",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          //             color: Colors.white
+                          //         ),),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          Expanded(child: Align(alignment: Alignment.centerLeft,child: Image.asset("assets/logo_white.png",fit: BoxFit.cover,height: 35,))),
                           Material(
                             color: Colors.transparent,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
