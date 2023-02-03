@@ -116,7 +116,7 @@ class _MyHomePageState extends Superbase<MyHomePage> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/logo.png"))
+          image: DecorationImage(image: AssetImage("assets/logo_new.png"))
         ),
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );

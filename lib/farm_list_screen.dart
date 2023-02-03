@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orora2/farm_production_list.dart';
+import 'package:orora2/farm_profile.dart';
 import 'package:orora2/farm_registration.dart';
 import 'package:orora2/json/user.dart';
 import 'package:orora2/livestock_list.dart';
@@ -34,6 +35,7 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
       "token":User.user?.token
     }),onValue: (obj,url){
       setState(() {
+        print(obj);
         _farms = (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
       });
     });
@@ -89,7 +91,14 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
               onTap: widget.fromProduction ? (){
                 push(FarmProductionList(farm: farm));
               } : (){
-                Navigator.push(context, CupertinoPageRoute(builder: (context)=>LivestockList(farm: farm,fromProduction: widget.fromProduction,)));
+                if(widget.fromProduction) {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) =>
+                          LivestockList(farm: farm,
+                            fromProduction: widget.fromProduction,)));
+                }else{
+                  push(FarmProfile(farm: farm));
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.all(15.0),

@@ -113,7 +113,7 @@ class _DashboardState extends Superbase<Dashboard> {
                           //     ),
                           //   ),
                           // ),
-                          Expanded(child: Align(alignment: Alignment.centerLeft,child: Image.asset("assets/logo_white.png",fit: BoxFit.cover,height: 35,))),
+                          Expanded(child: Align(alignment: Alignment.centerLeft,child: Image.asset("assets/logo_new.png",fit: BoxFit.cover,height: 35,))),
                           Material(
                             color: Colors.transparent,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
