@@ -124,7 +124,6 @@ class _DashboardState extends Superbase<Dashboard> {
                               decoration: const BoxDecoration(
                                 color: Colors.black26,shape: BoxShape.circle),
                               child: IconButton(color: Colors.white70,onPressed: (){
-
                                 showSearch(context: context, delegate: SearchDemoSearchDelegate((query){
                                   return SearchScreen(query: query);
                                 }));

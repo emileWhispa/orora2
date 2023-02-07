@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:orora2/edit_profile_picture.dart';
 import 'package:orora2/livestock_list.dart';
 import 'package:orora2/super_base.dart';
 
@@ -59,7 +61,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
               Colors.white,
               Colors.white,
             ]),
-          image: const DecorationImage(image: AssetImage("assets/farm_back.png"),fit: BoxFit.fitWidth,alignment: Alignment.topCenter),
+          image: widget.farm.picture != null ?  DecorationImage(image: CachedNetworkImageProvider(widget.farm.picture!),fit: BoxFit.fitWidth,alignment: Alignment.topCenter): null,
         ),
         child: ListView(
           children: [
@@ -95,8 +97,11 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: InkWell(
-                              onTap: (){
+                              onTap: ()async{
+                                await push(EditProfilePicture(farm: widget.farm,));
+                                setState(() {
 
+                                });
                               },
                               child: Row(
                                 children: [

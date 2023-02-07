@@ -181,7 +181,7 @@ class BarChartSample2State extends Superbase<BarChartSample2> {
       fontWeight: FontWeight.normal,
       fontSize: 10,
     );
-    String text= fmtNbr(value);
+    String text= formatter.format(value);
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,

@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:orora2/expenses_list.dart';
 import 'package:orora2/income_list.dart';
-import 'package:orora2/report_bar_chart.dart';
 import 'package:orora2/super_base.dart';
 
 import 'bar_chat_sample.dart';
@@ -45,7 +44,6 @@ class _ReportScreenState extends Superbase<ReportScreen> {
       "from":fmtDate2(start),
       "to":fmtDate2(end),
     }),onValue: (s,v){
-      print(s);
       if(s['code'] == 200 && mounted && s['chart'] is Map) {
         setState(() {
           incomeData = s['chart']['income'];
