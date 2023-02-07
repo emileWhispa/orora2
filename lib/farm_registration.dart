@@ -5,12 +5,14 @@ import 'package:orora2/super_base.dart';
 
 import 'json/category.dart';
 import 'json/district.dart';
+import 'json/farm.dart';
 import 'json/province.dart';
 import 'json/sector.dart';
 import 'json/user.dart';
 
 class FarmRegistration extends StatefulWidget{
-  const FarmRegistration({super.key});
+  final Farm? farm;
+  const FarmRegistration({super.key, this.farm});
 
   @override
   State<FarmRegistration> createState() => _FarmRegistrationState();

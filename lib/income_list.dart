@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:orora2/create_farm_production.dart';
 import 'package:orora2/json/transaction.dart';
 import 'package:orora2/super_base.dart';
 
 import 'finance_dashboard.dart';
-import 'json/farm.dart';
-import 'json/production.dart';
 import 'json/user.dart';
 
 class IncomeList extends StatefulWidget{

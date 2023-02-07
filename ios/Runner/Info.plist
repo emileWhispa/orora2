@@ -52,5 +52,9 @@
       <string>sms</string>
       <string>tel</string>
     </array>
+	<key>NSCameraUsageDescription</key>
+	<string>Orora needs to access your camera to update your profile picture and your products</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Orora needs to access your camera to update your profile picture and your products</string>
 </dict>
 </plist>

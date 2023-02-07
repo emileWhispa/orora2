@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:orora2/homepage.dart';
 import 'package:orora2/super_base.dart';
 
 import 'input_dec.dart';
-import 'json/user.dart';
 
 class Registration extends StatefulWidget{
   const Registration({super.key});
@@ -38,7 +35,6 @@ class _RegistrationState extends Superbase<Registration> {
         "user_phone":phoneController.text,
         "user_password":passwordController.text,
       }),onValue: (obj,url){
-        print(obj);
         if(obj['code'] == 200){
           showSnack(obj['message'],context: context);
           goBack();
