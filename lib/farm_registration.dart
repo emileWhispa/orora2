@@ -34,6 +34,9 @@ class _FarmRegistrationState extends Superbase<FarmRegistration> {
 
   @override
   void initState() {
+    if(widget.farm != null){
+      nameController.text = widget.farm!.name;
+    }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 loadCategories();
 loadProvinces();
@@ -45,6 +48,11 @@ loadProvinces();
     ajax(url: "farms/farmCategories",onValue: (s,v){
       setState(() {
         _categories = (s['data'] as Iterable).map((e) => Category.fromJson(e)).toList();
+        if(widget.farm != null && _categories.any((element) => element.id == widget.farm!.categoryId)){
+          setState(() {
+            _category = _categories.firstWhere((element) => element.id == widget.farm!.categoryId);
+          });
+        }
       });
     });
   }
@@ -58,6 +66,12 @@ loadProvinces();
         _sector = null;
         _sectors.clear();
         _provinces = (s['data'] as Iterable).map((e) => Province.fromJson(e)).toList();
+        if(widget.farm != null && _provinces.any((element) => element.id == widget.farm!.provinceId)){
+          setState(() {
+            _province = _provinces.firstWhere((element) => element.id == widget.farm!.provinceId);
+            loadDistrict(_province!);
+          });
+        }
       });
     });
   }
@@ -69,6 +83,12 @@ loadProvinces();
         _sector = null;
         _sectors.clear();
         _districts = (s['data'] as Iterable).map((e) => District.fromJson(e)).toList();
+        if(widget.farm != null && _districts.any((element) => element.id == widget.farm!.districtId)){
+          setState(() {
+            _district = _districts.firstWhere((element) => element.id == widget.farm!.districtId);
+            loadSectors(_district!);
+          });
+        }
       });
     });
   }
@@ -78,6 +98,11 @@ loadProvinces();
       setState(() {
         _sector = null;
         _sectors = (s['data'] as Iterable).map((e) => Sector.fromJson(e)).toList();
+        if(widget.farm != null && _sectors.any((element) => element.id == widget.farm!.sectorId)){
+          setState(() {
+            _sector = _sectors.firstWhere((element) => element.id == widget.farm!.sectorId);
+          });
+        }
       });
     });
   }
@@ -113,7 +138,7 @@ loadProvinces();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Farm Registration"),
+        title: Text(widget.farm != null ? "Edit Farm" : "Farm Registration"),
       ),
       body: Form(
         key: key,

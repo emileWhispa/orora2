@@ -43,17 +43,15 @@ class _EditProfilePictureState extends Superbase<EditProfilePicture> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
+    return ListView(
         padding: const EdgeInsets.all(20),
         children: [
           Center(
             child: Stack(
               children: [
                 Container(
-                  height: 110,
-                  width: 110,
+                  height: 140,
+                  width: 140,
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       image: DecorationImage(
@@ -153,7 +151,6 @@ class _EditProfilePictureState extends Superbase<EditProfilePicture> {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

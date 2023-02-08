@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:orora2/edit_profile_picture.dart';
+import 'package:orora2/farm_registration.dart';
 import 'package:orora2/livestock_list.dart';
 import 'package:orora2/super_base.dart';
 
@@ -49,6 +51,25 @@ class _FarmProfileState extends Superbase<FarmProfile> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Color(0xff3C9343)
+        ),
+
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(onPressed: ()async{
+    await showModalBottomSheet(context: context,shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(20)
+      )
+    ),builder: (context)=>EditProfilePicture(farm: widget.farm,));
+    setState(() {
+
+    });
+    }, icon: const Icon(FontAwesome.edit)),
+          )
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: Container(
@@ -98,7 +119,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: InkWell(
                               onTap: ()async{
-                                await push(EditProfilePicture(farm: widget.farm,));
+                                await push(FarmRegistration(farm: widget.farm,));
                                 setState(() {
 
                                 });
@@ -121,7 +142,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                                       ],
                                     ),
                                   )),
-                                  const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                                  const Icon(FontAwesome.edit,color: Color(0xffB6ADAD),)
                                 ],
                               ),
                             ),
