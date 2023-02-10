@@ -30,6 +30,8 @@ class _DashboardState extends Superbase<Dashboard> {
   int myFarms = 0;
   int feeds = 0;
   int farmProduction = 0;
+  int budget = 0;
+
 
   
   @override
@@ -50,6 +52,7 @@ class _DashboardState extends Superbase<Dashboard> {
       if(s['code'] == 200) {
         setState(() {
           expenses = s['expenses'];
+          budget = s['budget'];
           farmProduction = s['farmProduction'];
           feeds = s['feeds'];
           incomeData = s['week']['income'];
@@ -81,7 +84,7 @@ class _DashboardState extends Superbase<Dashboard> {
             Stack(
               children: [
                 Container(
-                  height: 238,
+                  height: 220,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -90,7 +93,7 @@ class _DashboardState extends Superbase<Dashboard> {
                   height: 170,
                 ),
                 Positioned.fill(child: Padding(
-                  padding: const EdgeInsets.all(15.0).copyWith(top: MediaQuery.of(context).padding.top),
+                  padding: const EdgeInsets.all(15.0).copyWith(top: MediaQuery.of(context).padding.top,bottom: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -149,7 +152,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                 },
                                 child: Row(
                                   children: [
-                                    Image.asset("assets/sales.png"),
+                                    Image.asset("assets/sales.png",width: 30,),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 4),
@@ -158,10 +161,40 @@ class _DashboardState extends Superbase<Dashboard> {
                                           children: [
                                             Text("${formatter.format(sales)} RWF",style: const TextStyle(
                                               color: Color(0xff3C9343),
-                                              fontSize: 17,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.w700
                                             ),maxLines: 1,overflow: TextOverflow.ellipsis),
-                                            const Text("Income")
+                                            const Text("Income",style: TextStyle(
+                                              fontSize: 11
+                                            ),)
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const IncomeList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/budget.png",width: 30,),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${formatter.format(budget)} RWF",style: const TextStyle(
+                                              color: Color(0xff357ED9),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                            const Text("Budget",style: TextStyle(
+                                              fontSize: 11
+                                            ),)
                                           ],
                                         ),
                                       ),
@@ -175,7 +208,7 @@ class _DashboardState extends Superbase<Dashboard> {
                                 },
                                 child: Row(
                                   children: [
-                                    Image.asset("assets/expenses.png"),
+                                    Image.asset("assets/expenses.png",width: 30,),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 4),
@@ -184,10 +217,12 @@ class _DashboardState extends Superbase<Dashboard> {
                                           children: [
                                             Text("${formatter.format(expenses)} RWF",style: const TextStyle(
                                               color: Color(0xffD80404),
-                                              fontSize: 17,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.w700
                                             ),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                            const Text("Expenses")
+                                            const Text("Expenses",style: TextStyle(
+                                              fontSize: 11
+                                            ),)
                                           ],
                                         ),
                                       ),

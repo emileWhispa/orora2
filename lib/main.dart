@@ -115,6 +115,7 @@ class _MyHomePageState extends Superbase<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       body: Container(
+        margin: const EdgeInsets.all(70),
         decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/logo_new.png"))
         ),

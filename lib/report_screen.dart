@@ -20,6 +20,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
 
   String message = "";
   int income = 0;
+  int budget = 0;
   int profit = 0;
   int expenses = 0;
   late DateTime start;
@@ -49,6 +50,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
           incomeData = s['chart']['income'];
           expensesData = s['chart']['expenses'];
           income = s['income'];
+          budget = s['budget'];
           profit = s['profit'];
           expenses = s['expenses'];
         });
@@ -179,10 +181,31 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                       children: [
                                         Text(formatter.format(income),style: const TextStyle(
                                           color: Color(0xff3C9343),
-                                          fontWeight: FontWeight.bold
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16
                                         ),),
                                         const Text("Income",style: TextStyle(
                                           color: Color(0xff3C9343),
+                                          fontSize: 12
+                                        ),),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: (){
+                                      push(IncomeList(start: start,end: end,));
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(formatter.format(budget),style: const TextStyle(
+                                          color: Color(0xff357ED9),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16
+                                        ),),
+                                        const Text("Monthly Budget",style: TextStyle(
+                                          color: Color(0xff357ED9),
+                                          fontSize: 11
                                         ),),
                                       ],
                                     ),
@@ -196,10 +219,12 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                       children:  [
                                         Text(formatter.format(expenses),style: const TextStyle(
                                             color: Color(0xffE44747),
-                                            fontWeight: FontWeight.bold
+                                            fontWeight: FontWeight.bold,
+                                          fontSize: 16
                                         ),),
                                         const Text("Expenses",style: TextStyle(
                                           color: Color(0xffE44747),
+                                          fontSize: 11
                                         ),textAlign: TextAlign.end,),
                                       ],
                                     ),

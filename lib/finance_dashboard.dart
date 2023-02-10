@@ -24,6 +24,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
   Farm? _farm;
   int expenses = 0;
   int income = 0;
+  int budget = 0;
 
   List<Transaction> _transactions = [];
   final _key = GlobalKey<RefreshIndicatorState>();
@@ -59,10 +60,12 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
       "token":User.user?.token,
       "farm_id":_farm?.id,
     }),onValue: (obj,url){
+      print(obj);
       if(obj is Map && obj.containsKey("summary")) {
         setState(() {
           expenses = obj['summary']['expenses'];
           income = obj['summary']['income'];
+          budget = obj['summary']['budget'];
           _transactions = (obj['data'] as Iterable?)
               ?.map((e) => Transaction.fromJson(e))
               .toList() ?? [];
@@ -161,12 +164,80 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                           )
                         ],
                       ),
+                      // Card(
+                      //   elevation: 12,
+                      //   shadowColor: Colors.black26,
+                      //   margin: EdgeInsets.zero.copyWith(top: 20),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
+                      //     child: Row(
+                      //       children: [
+                      //         Expanded(child: InkWell(
+                      //           onTap: (){
+                      //             push(const IncomeList());
+                      //           },
+                      //           child: Row(
+                      //             children: [
+                      //               Image.asset("assets/sales.png"),
+                      //               Expanded(
+                      //                 child: Padding(
+                      //                   padding: const EdgeInsets.only(left: 4),
+                      //                   child: Column(
+                      //                     crossAxisAlignment: CrossAxisAlignment.start,
+                      //                     children:  [
+                      //                       Text("${formatter.format(income)} RWF",style: const TextStyle(
+                      //                           color: Color(0xff3C9343),
+                      //                           fontSize: 17,
+                      //                           fontWeight: FontWeight.w700
+                      //                       ),),
+                      //                       const Text("Income")
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         )),
+                      //         Expanded(child: InkWell(
+                      //           onTap: (){
+                      //             push(const ExpensesList());
+                      //           },
+                      //           child: Row(
+                      //             children: [
+                      //               Image.asset("assets/expenses.png"),
+                      //               Expanded(
+                      //                 child: Padding(
+                      //                   padding: const EdgeInsets.only(left: 4),
+                      //                   child: Column(
+                      //                     crossAxisAlignment: CrossAxisAlignment.start,
+                      //                     children: [
+                      //                       Text("${formatter.format(expenses)} RWF",style: const TextStyle(
+                      //                           color: Color(0xffD80404),
+                      //                           fontSize: 17,
+                      //                           fontWeight: FontWeight.w700
+                      //                       ),),
+                      //                       const Text("Expenses")
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ))
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+
                       Card(
+                        margin: EdgeInsets.zero.copyWith(top: 15),
                         elevation: 12,
                         shadowColor: Colors.black26,
-                        margin: EdgeInsets.zero.copyWith(top: 20),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)
+                        ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 35),
+                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 30),
                           child: Row(
                             children: [
                               Expanded(child: InkWell(
@@ -175,19 +246,49 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                 },
                                 child: Row(
                                   children: [
-                                    Image.asset("assets/sales.png"),
+                                    Image.asset("assets/sales.png",width: 30,),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 4),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          children:  [
+                                          children: [
                                             Text("${formatter.format(income)} RWF",style: const TextStyle(
                                                 color: Color(0xff3C9343),
-                                                fontSize: 17,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w700
-                                            ),),
-                                            const Text("Income")
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                            const Text("Income",style: TextStyle(
+                                                fontSize: 11
+                                            ),)
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                              Expanded(child: InkWell(
+                                onTap: (){
+                                  push(const IncomeList());
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset("assets/budget.png",width: 30,),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${formatter.format(budget)} RWF",style: const TextStyle(
+                                                color: Color(0xff357ED9),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                            const Text("Budget",style: TextStyle(
+                                                fontSize: 11
+                                            ),)
                                           ],
                                         ),
                                       ),
@@ -201,7 +302,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                 },
                                 child: Row(
                                   children: [
-                                    Image.asset("assets/expenses.png"),
+                                    Image.asset("assets/expenses.png",width: 30,),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 4),
@@ -210,10 +311,12 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
                                           children: [
                                             Text("${formatter.format(expenses)} RWF",style: const TextStyle(
                                                 color: Color(0xffD80404),
-                                                fontSize: 17,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w700
-                                            ),),
-                                            const Text("Expenses")
+                                            ),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                            const Text("Expenses",style: TextStyle(
+                                                fontSize: 11
+                                            ),)
                                           ],
                                         ),
                                       ),

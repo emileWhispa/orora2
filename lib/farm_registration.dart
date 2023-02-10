@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:orora2/input_dec.dart';
 import 'package:orora2/super_base.dart';
 
@@ -28,9 +29,11 @@ class _FarmRegistrationState extends Superbase<FarmRegistration> {
   Province? _province;
   District? _district;
   Sector? _sector;
+  String? _budgetType;
 
   var key = GlobalKey<FormState>();
   var nameController = TextEditingController();
+  var budgetController = TextEditingController();
 
   @override
   void initState() {
@@ -122,6 +125,8 @@ loadProvinces();
             "province_id":_province?.id,
             "district_id":_district?.id,
             "sector_id":_sector?.id,
+            "budget_type":_budgetType,
+            'budget_amount':budgetController.text,
           }),onValue: (s,v){
         showSnack(s['message']);
         if(s['code'] == 200) {
@@ -186,6 +191,24 @@ loadProvinces();
                   _sector = val;
                 });
               },decoration: iDecoration(hint: "Sector"),),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Text("Budget"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: DropdownButtonFormField<String>(validator: (s)=>s == null ? "Budget Type is required" : null,value: _budgetType,items: ["Monthly","Yearly"].map((e) => DropdownMenuItem(value: e,child: Text(e),)).toList(), onChanged: (val){
+                setState(() {
+                  _budgetType = val;
+                });
+              },decoration: iDecoration(hint: "Budget Type"),),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: TextFormField(controller: budgetController,keyboardType: TextInputType.number,inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly
+              ],validator: (s)=>s?.trim().isNotEmpty == true ? null : 'Budget Amount is required',decoration: iDecoration(hint: "Budget Amount"),),
             ),
             _loading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(onPressed: register, child: const Text("Register"))
           ],
