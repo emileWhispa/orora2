@@ -34,11 +34,16 @@ class _FarmRegistrationState extends Superbase<FarmRegistration> {
   var key = GlobalKey<FormState>();
   var nameController = TextEditingController();
   var budgetController = TextEditingController();
+  final _budgetTypes = ["Monthly","Yearly"];
 
   @override
   void initState() {
     if(widget.farm != null){
       nameController.text = widget.farm!.name;
+      if(_budgetTypes.any((element) =>element == widget.farm!.budgetType)){
+        _budgetType = widget.farm!.budgetType;
+      }
+      budgetController.text = widget.farm!.budgetAmount?.toString() ?? "";
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 loadCategories();
@@ -117,11 +122,12 @@ loadProvinces();
       setState(() {
         _loading = true;
       });
-      await ajax(url: "farms/addFarm",method: "POST",data: FormData.fromMap(
+      await ajax(url: widget.farm != null ? "farms/updateFarm" : "farms/addFarm",method: "POST",data: FormData.fromMap(
           {
             "token":User.user?.token,
             "farm_name":nameController.text,
             "category_id":_category?.id,
+            "farm_id":widget.farm?.id,
             "province_id":_province?.id,
             "district_id":_district?.id,
             "sector_id":_sector?.id,
@@ -198,7 +204,7 @@ loadProvinces();
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
-              child: DropdownButtonFormField<String>(validator: (s)=>s == null ? "Budget Type is required" : null,value: _budgetType,items: ["Monthly","Yearly"].map((e) => DropdownMenuItem(value: e,child: Text(e),)).toList(), onChanged: (val){
+              child: DropdownButtonFormField<String>(validator: (s)=>s == null ? "Budget Type is required" : null,value: _budgetType,items: _budgetTypes.map((e) => DropdownMenuItem(value: e,child: Text(e),)).toList(), onChanged: (val){
                 setState(() {
                   _budgetType = val;
                 });
@@ -210,7 +216,7 @@ loadProvinces();
                 FilteringTextInputFormatter.digitsOnly
               ],validator: (s)=>s?.trim().isNotEmpty == true ? null : 'Budget Amount is required',decoration: iDecoration(hint: "Budget Amount"),),
             ),
-            _loading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(onPressed: register, child: const Text("Register"))
+            _loading ? const Center(child: CircularProgressIndicator(),) : ElevatedButton(onPressed: register, child: Text(widget.farm != null ? "Update" : "Register"))
           ],
         ),
       ),

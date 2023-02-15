@@ -8,6 +8,8 @@ class Farm {
   String? districtId;
   String? sectorId;
   String? categoryId;
+  String? budgetType;
+  num? budgetAmount;
 
   Farm.fromJson(Map<String, dynamic> map)
       : id = map['farm_id'],
@@ -16,6 +18,8 @@ class Farm {
         districtId = map['district_id'],
         sectorId = map['sector_id'],
         categoryId = map['category_id'],
+        budgetType = map['budget_type'],
+        budgetAmount = num.tryParse(map['budget_amount']??""),
         picture = map['farm_profile_picture'] ?? "",
         livestocks = map['livestocks'] ?? 0,
         sector = map['sector_name'];
