@@ -13,6 +13,7 @@ import 'package:orora2/report_screen.dart';
 import 'package:orora2/search_delegate.dart';
 import 'package:orora2/super_base.dart';
 
+import 'json/farm.dart';
 import 'search_screen.dart';
 
 class Dashboard extends StatefulWidget{
@@ -32,22 +33,42 @@ class _DashboardState extends Superbase<Dashboard> {
   int farmProduction = 0;
   int budget = 0;
 
+  List<Farm> _farms = [];
+  Farm? _farm;
+  final _key = GlobalKey<RefreshIndicatorState>();
 
   
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) { 
-      loadData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      loadFarms();
     });
     super.initState();
   }
 
+  Future<void> loadFarms() {
+    return ajax(
+        url: "farms/myFarms",
+        method: "POST",
+        data: FormData.fromMap({"token": User.user?.token}),
+        onValue: (obj, url) {
+          setState(() {
+            _farms =
+                (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
+            if(_farm == null && _farms.isNotEmpty){
+              _farm = _farms.first;
+              loadData();
+            }
+          });
+        });
+  }
   Map? incomeData;
   Map? expensesData;
 
   Future<void> loadData(){
     return ajax(url: "home/index.php",method: "POST",data: FormData.fromMap({
-      "token":User.user?.token
+      "token":User.user?.token,
+      "farm_id":_farm?.id??"",
     }),onValue: (s,v){
       if(s['code'] == 200) {
         setState(() {
@@ -77,6 +98,7 @@ class _DashboardState extends Superbase<Dashboard> {
     return Scaffold(
       backgroundColor: const Color(0xffF8F8F8),
       body: RefreshIndicator(
+        key: _key,
         onRefresh: loadData,
         child: ListView(
           padding: EdgeInsets.zero,
@@ -116,7 +138,37 @@ class _DashboardState extends Superbase<Dashboard> {
                           //     ),
                           //   ),
                           // ),
-                          Expanded(child: Align(alignment: Alignment.centerLeft,child: Image.asset("assets/logo_new.png",fit: BoxFit.cover,height: 35,))),
+                          Expanded(child: Align(alignment: Alignment.centerLeft,child: Image.asset("assets/logo_new.png",fit: BoxFit.cover,height: 30,))),
+                          SizedBox(
+                            height: 40,
+                            width: 130,
+                            child: DropdownButtonFormField<Farm>(
+                              isExpanded: true,
+                              validator: (s)=>s == null ? "Farm is required !" : null,
+                              value: _farm,
+                              items: _farms
+                                  .map((e) => DropdownMenuItem(
+                                value: e,
+                                child: Text(e.name,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                              ))
+                                  .toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  _farm = val;
+                                  _key.currentState?.show();
+                                });
+                              },
+                              style: const TextStyle(
+                                color: Colors.black
+                              ),
+                              decoration: InputDecoration(hintText: "Farm",filled: true,fillColor: Colors.transparent,contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15
+                              ),border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide.none
+                              )),
+                            ),
+                          ),
                           Material(
                             color: Colors.transparent,
                             clipBehavior: Clip.antiAliasWithSaveLayer,

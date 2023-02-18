@@ -36,8 +36,7 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
         data: FormData.fromMap({"token": User.user?.token}),
         onValue: (obj, url) {
           setState(() {
-            _farms =
-                (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
+            _farms = (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
             if(_farm == null && _farms.isNotEmpty){
               _farm = _farms.first;
               loadData();
@@ -60,7 +59,6 @@ class _FinanceDashboardState extends Superbase<FinanceDashboard> {
       "token":User.user?.token,
       "farm_id":_farm?.id,
     }),onValue: (obj,url){
-      print(obj);
       if(obj is Map && obj.containsKey("summary")) {
         setState(() {
           expenses = obj['summary']['expenses'];
