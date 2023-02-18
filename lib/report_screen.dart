@@ -25,6 +25,8 @@ class _ReportScreenState extends Superbase<ReportScreen> {
   int expenses = 0;
   late DateTime start;
   late DateTime end;
+  String? _filter;
+  final _key = GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -72,6 +74,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffF8F8F8),
       body: RefreshIndicator(
+        key: _key,
         onRefresh: loadData,
         child: ListView(
           padding: EdgeInsets.zero,
@@ -79,7 +82,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
             Stack(
               children: [
                 Container(
-                  height: 290,
+                  height: 300,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -103,9 +106,44 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                   Text("Reports",style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                       color: Colors.white
                                   ),),
-                                  Text("${fmtDate2(start)} - ${fmtDate2(end)}",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Colors.white
-                                  ),),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: SizedBox(
+                                      height: 30,
+                                      width: 130,
+                                      child: DropdownButtonFormField<String>(
+                                        validator: (s)=>s == null ? "Farm is required !" : null,
+                                        isExpanded: true,
+                                        value: _filter,
+                                        items: ["Weekly","Monthly"]
+                                            .map((e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(e),
+                                        ))
+                                            .toList(),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            _filter = val;
+                                            _key.currentState?.show();
+                                          });
+                                        },
+                                        style: const TextStyle(
+                                          color: Colors.white
+                                        ),
+                                        iconEnabledColor: Colors.white,
+                                        dropdownColor: Theme.of(context).primaryColor,
+                                        decoration: InputDecoration(hintText: "Farm",filled: true,fillColor: Colors.transparent,contentPadding: const EdgeInsets.symmetric(
+                                            horizontal: 0
+                                        ),border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(30),
+                                            borderSide: BorderSide.none
+                                        )),
+                                      ),
+                                    ),
+                                  ),
+                                  // Text("${fmtDate2(start)} - ${fmtDate2(end)}",style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  //     color: Colors.white
+                                  // ),),
                                 ],
                               ),
                             ),

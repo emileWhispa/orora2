@@ -125,7 +125,7 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        const Text("Livestock info",style: TextStyle(
+                                        const Text("Livestock Transfer",style: TextStyle(
                                             fontSize: 16
                                         ),),
                                         const SizedBox(height: 5,),
