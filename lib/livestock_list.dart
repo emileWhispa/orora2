@@ -55,59 +55,63 @@ class _LivestockListState extends Superbase<LivestockList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.farm.name),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (context) => LivestockRegistration(
+                      farm: widget.farm,
+                    )));
+          }, icon: const Icon(Icons.add))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: loadData,
         child: GridView.builder(
-            itemCount: _livestocks.length + (widget.fromProduction ? 0 : 1),
+            itemCount: _livestocks.length,
             padding: const EdgeInsets.all(12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3),
             itemBuilder: (context, index) {
-              if (!widget.fromProduction) {
-                index = index - 1;
-                if (index < 0) {
-                  return SizedBox(
-                    height: 200,
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => LivestockRegistration(
-                                        farm: widget.farm,
-                                      )));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "Add New Livestock",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 0.0),
-                                child: Icon(
-                                  Icons.add,
-                                  size: 50,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-              }
+              // if (!widget.fromProduction) {
+              //   index = index - 1;
+              //   if (index < 0) {
+              //     return SizedBox(
+              //       height: 200,
+              //       child: Card(
+              //         clipBehavior: Clip.antiAliasWithSaveLayer,
+              //         shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(10)),
+              //         child: InkWell(
+              //           onTap: () {
+              //           },
+              //           child: Padding(
+              //             padding: const EdgeInsets.all(12.0),
+              //             child: Column(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: const [
+              //                 Text(
+              //                   "Add New Livestock",
+              //                   style: TextStyle(
+              //                       fontSize: 14, fontWeight: FontWeight.bold),
+              //                   textAlign: TextAlign.center,
+              //                 ),
+              //                 Padding(
+              //                   padding: EdgeInsets.only(top: 0.0),
+              //                   child: Icon(
+              //                     Icons.add,
+              //                     size: 50,
+              //                   ),
+              //                 )
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   }
+              // }
 
               var livestock = _livestocks[index];
               return SizedBox(

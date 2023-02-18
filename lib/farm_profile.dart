@@ -78,9 +78,9 @@ class _FarmProfileState extends Superbase<FarmProfile> {
               const Color(0xff617c0e),
               Theme.of(context).primaryColor,
               Theme.of(context).primaryColor,
-              Colors.white,
-              Colors.white,
-              Colors.white,
+              const Color(0xffF7F7F7),
+              const Color(0xffF7F7F7),
+              const Color(0xffF7F7F7),
             ]),
           image: widget.farm.picture != null ?  DecorationImage(image: CachedNetworkImageProvider(widget.farm.picture!),fit: BoxFit.fitWidth,alignment: Alignment.topCenter): null,
         ),
@@ -90,6 +90,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
             Card(
               elevation: 0,
               margin: EdgeInsets.zero,
+              color: const Color(0xffF7F7F7),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20),
@@ -112,7 +113,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
@@ -133,11 +134,13 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: const [
                                         Text("Farm Information",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         SizedBox(height: 5,),
                                         Text("Address, Category",style: TextStyle(
-                                            color: Color(0xff403939)
+                                            color: Color(0xff403939),
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -152,7 +155,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
@@ -169,12 +172,13 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Livestock",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         const SizedBox(height: 5,),
                                         Text(fmtNbr(livestock),style:const TextStyle(
                                             color: Color(0xff403939),
-                                          fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -188,7 +192,7 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
@@ -206,12 +210,13 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Income",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         const SizedBox(height: 5,),
                                         Text(formatter.format(income),style:const TextStyle(
                                             color: Color(0xff403939),
-                                            fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -236,12 +241,13 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Expenses",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         const SizedBox(height: 5,),
                                         Text(formatter.format(expenses),style:const TextStyle(
                                             color: Color(0xff403939),
-                                          fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),

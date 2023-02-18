@@ -71,9 +71,9 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
             const Color(0xff617c0e),
             Theme.of(context).primaryColor,
             Theme.of(context).primaryColor,
-            Colors.white,
-            Colors.white,
-            Colors.white,
+            const Color(0xffF7F7F7),
+            const Color(0xffF7F7F7),
+            const Color(0xffF7F7F7),
           ]),
           image:  const DecorationImage(image: AssetImage("assets/farm_back.png"),fit: BoxFit.fitWidth,alignment: Alignment.topCenter),
         ),
@@ -83,6 +83,7 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
             Card(
               elevation: 0,
               margin: EdgeInsets.zero,
+              color: const Color(0xffF7F7F7),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20),
@@ -105,7 +106,7 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
@@ -126,11 +127,13 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         const Text("Livestock Transfer",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
-                                        const SizedBox(height: 5,),
+                                        const SizedBox(height: 3,),
                                         Text(widget.livestock.tag??"",style: const TextStyle(
-                                            color: Color(0xff403939)
+                                            color: Color(0xff403939),
+                                          fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -145,7 +148,7 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
@@ -162,12 +165,13 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Reproduction",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                          color: Color(0xffB6ADAD)
                                         ),),
-                                        const SizedBox(height: 5,),
+                                        const SizedBox(height: 3,),
                                         Text(fmtNbr(reproduction),style:const TextStyle(
                                             color: Color(0xff403939),
-                                            fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -181,11 +185,11 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                        color: Color(0xffDADADA)
+                                        color: Color(0xffEBEBEB)
                                     )
                                 )
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 2),
                             child: InkWell(
                               onTap: ()async{
 
@@ -199,12 +203,13 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Income",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         const SizedBox(height: 5,),
                                         Text(formatter.format(income),style:const TextStyle(
                                             color: Color(0xff403939),
-                                            fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
@@ -229,12 +234,13 @@ class _LivestockProfileState extends Superbase<LivestockProfile> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children:  [
                                         const Text("Expenses",style: TextStyle(
-                                            fontSize: 16
+                                            fontSize: 12,
+                                            color: Color(0xffB6ADAD)
                                         ),),
                                         const SizedBox(height: 5,),
                                         Text(formatter.format(expenses),style:const TextStyle(
                                             color: Color(0xff403939),
-                                            fontSize: 18
+                                            fontSize: 15
                                         ),),
                                       ],
                                     ),
