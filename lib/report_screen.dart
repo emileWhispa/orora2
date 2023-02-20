@@ -45,6 +45,7 @@ class _ReportScreenState extends Superbase<ReportScreen> {
     return ajax(url: "reports/",method: "POST",data: FormData.fromMap({
       "token":User.user?.token,
       "from":fmtDate2(start),
+      "report_category":_filter??"",
       "to":fmtDate2(end),
     }),onValue: (s,v){
       if(s['code'] == 200 && mounted && s['chart'] is Map) {
@@ -127,11 +128,6 @@ class _ReportScreenState extends Superbase<ReportScreen> {
                                             _key.currentState?.show();
                                           });
                                         },
-                                        style: const TextStyle(
-                                          color: Colors.white
-                                        ),
-                                        iconEnabledColor: Colors.white,
-                                        dropdownColor: Theme.of(context).primaryColor,
                                         decoration: InputDecoration(hintText: "Farm",filled: true,fillColor: Colors.transparent,contentPadding: const EdgeInsets.symmetric(
                                             horizontal: 0
                                         ),border: OutlineInputBorder(

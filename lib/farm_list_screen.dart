@@ -103,7 +103,7 @@ class _FarmListScreenState extends Superbase<FarmListScreen> {
                 borderRadius: BorderRadius.circular(10)
             ),child: InkWell(
               onTap: widget.fromProduction ? (){
-                push(FarmProductionList(farm: farm));
+
               } : (){
                 if(widget.fromProduction) {
                   Navigator.push(context,

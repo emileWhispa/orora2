@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:orora2/stock_activity_screen.dart';
 import 'package:orora2/super_base.dart';
 
+import 'json/farm.dart';
 import 'json/feed.dart';
 import 'json/user.dart';
 
@@ -25,19 +26,40 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
   int inFeeds = 0;
   int expiring = 0;
   List<Feed> _list = [];
+  List<Farm> _farms = [];
+  Farm? _farm;
 
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadData();
+      loadFarms();
     });
     super.initState();
+  }
+
+  Future<void> loadFarms() {
+    return ajax(
+        url: "farms/myFarms",
+        method: "POST",
+        data: FormData.fromMap({"token": User.user?.token}),
+        onValue: (obj, url) {
+          setState(() {
+            _farms =
+                (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
+            if(_farm == null && _farms.isNotEmpty){
+              _farm = _farms.first;
+              loadData();
+            }
+          });
+        });
   }
 
   void loadFeeds(){
     ajax(url: "feeds/activities",method: "POST",data: FormData.fromMap({
       "token":User.user?.token,
+      "farm_id":_farm?.id??""
     }),onValue: (s,v){
       setState(() {
         _list = (s['data'] as Iterable?)?.map((e) => Feed.fromJson(e)).toList() ?? [];
@@ -69,10 +91,45 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: false,
-        title: const Text("Overview",style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold
-        ),),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [const Text("Overview",style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+          ),),
+          Expanded(child: SizedBox(
+            height: 35,
+            width: 130,
+            child: DropdownButtonFormField<Farm>(
+              isExpanded: true,
+              validator: (s)=>s == null ? "Farm is required !" : null,
+              value: _farm,
+              items: _farms
+                  .map((e) => DropdownMenuItem(
+                value: e,
+                child: Text(e.name,maxLines: 1,overflow: TextOverflow.ellipsis,),
+              ))
+                  .toList(),
+              onChanged: (val) {
+                setState(() {
+                  _farm = val;
+                  _key.currentState?.show();
+                });
+              },
+              style: const TextStyle(
+                  color: Colors.black
+              ),
+              decoration: InputDecoration(hintText: "Farm",filled: true,fillColor: Colors.transparent,contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                vertical: 0
+              ),border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none
+              )),
+            ),
+          ))
+          ],
+        ),
         actions: [
           IconButton(onPressed: ()async{
             await push(const StockActivityScreen());

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:orora2/bar_chat_sample.dart';
 import 'package:orora2/expenses_list.dart';
 import 'package:orora2/farm_list_screen.dart';
+import 'package:orora2/farm_production_list.dart';
 import 'package:orora2/feeds_screen.dart';
 import 'package:orora2/income_list.dart';
 import 'package:orora2/json/user.dart';
@@ -359,7 +360,7 @@ class _DashboardState extends Superbase<Dashboard> {
                         borderRadius: BorderRadius.circular(10)
                     ),child: InkWell(
                       onTap: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>const FarmListScreen(fromProduction: true,)));
+                        push(const FarmProductionList());
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

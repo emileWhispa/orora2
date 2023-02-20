@@ -8,8 +8,7 @@ import 'json/production.dart';
 import 'json/user.dart';
 
 class FarmProductionList extends StatefulWidget{
-  final Farm farm;
-  const FarmProductionList({super.key, required this.farm});
+  const FarmProductionList({super.key});
 
   @override
   State<FarmProductionList> createState() => _FarmProductionListState();
@@ -23,15 +22,37 @@ class _FarmProductionListState extends Superbase<FarmProductionList> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadData();
+      loadFarms();
     });
     super.initState();
   }
+
+  Future<void> loadFarms() {
+    return ajax(
+        url: "farms/myFarms",
+        method: "POST",
+        data: FormData.fromMap({"token": User.user?.token}),
+        onValue: (obj, url) {
+          setState(() {
+            _farms =
+                (obj['data'] as Iterable?)?.map((e) => Farm.fromJson(e)).toList() ?? [];
+            if(_farm == null && _farms.isNotEmpty){
+              _farm = _farms.first;
+              loadData();
+            }
+          });
+        });
+  }
+
+
+  List<Farm> _farms = [];
+  Farm? _farm;
 
   Future<void> loadData(){
     return ajax(url: "production/production",method: "POST",data: FormData.fromMap(
         {
           "token":User.user?.token,
-          "farm_id":widget.farm.id
+          "farm_id":_farm?.id??""
         }),onValue: (obj,url){
       setState(() {
         _list = (obj['data'] as Iterable?)?.map((e) => Production.fromJson(e)).toList() ?? [];
@@ -43,10 +64,47 @@ class _FarmProductionListState extends Superbase<FarmProductionList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Farm Productions"),
+        title: Row(
+          children: [
+            const Text("Farm Productions"),
+            Expanded(child: SizedBox(
+              height: 35,
+              width: 130,
+              child: DropdownButtonFormField<Farm>(
+                isExpanded: true,
+                validator: (s)=>s == null ? "Farm is required !" : null,
+                value: _farm,
+                items: _farms
+                    .map((e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.name,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                ))
+                    .toList(),
+                onChanged: (val) {
+                  setState(() {
+                    _farm = val;
+                    _key.currentState?.show();
+                  });
+                },
+                style: const TextStyle(
+                    color: Colors.black
+                ),
+                decoration: InputDecoration(hintText: "Farm",filled: true,fillColor: Colors.transparent,contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 0
+                ),border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none
+                )),
+              ),
+            ))
+          ],
+        ),
         actions: [
           IconButton(onPressed: ()async{
-            await push(CreateFarmProduction(farm: widget.farm));
+            if(_farm != null) {
+              await push(CreateFarmProduction(farm: _farm!));
+            }
             _key.currentState?.show();
           }, icon: const Icon(Icons.add))
         ],
