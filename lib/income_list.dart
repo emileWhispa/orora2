@@ -82,8 +82,8 @@ class _IncomeListState extends Superbase<IncomeList> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Expanded(child: Text("Date",style: TextStyle(
                           fontWeight: FontWeight.bold
                       ))),

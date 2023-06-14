@@ -119,11 +119,11 @@ class _EditProfilePictureState extends Superbase<EditProfilePicture> {
                                   context: context,
                                   barrierDismissible: false,
                                   builder: (context) =>
-                                      AlertDialog(
+                                      const AlertDialog(
                                         content: Column(
                                           mainAxisSize:
                                           MainAxisSize.min,
-                                          children: const [
+                                          children: [
                                             Padding(
                                               padding:
                                               EdgeInsets

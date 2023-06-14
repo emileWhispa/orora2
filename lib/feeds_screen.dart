@@ -181,8 +181,8 @@ class _FeedsScreenState extends Superbase<FeedsScreen> {
                             color: Color(0xff286242)
                           ),),
                         ],)),
-                        Stack(
-                          children: const [
+                        const Stack(
+                          children: [
                             SizedBox(
                               height: 60,
                               width: 60,

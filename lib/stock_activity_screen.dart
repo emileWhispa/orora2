@@ -145,8 +145,8 @@ class _StockActivityScreenState extends Superbase<StockActivityScreen> {
                     .map((e) => DropdownMenuItem<Feed?>(
                           value: e,
                           child: e.name == null
-                              ? Row(
-                                  children: const [
+                              ? const Row(
+                                  children: [
                                     Icon(Icons.add),
                                     Text("Add New")
                                   ],

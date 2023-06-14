@@ -113,14 +113,14 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                 onTap: (){
                                   push(const EditProfileScreen());
                                 },
-                                child: Row(
+                                child: const Row(
                                   children: [
-                                    const CircleAvatar(radius:20,child: Icon(Icons.person),),
+                                    CircleAvatar(radius:20,child: Icon(Icons.person),),
                                     Expanded(child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        children: const [
+                                        children: [
                                           Text("Personal Information",style: TextStyle(
                                               fontSize: 16
                                           ),),
@@ -131,7 +131,7 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                         ],
                                       ),
                                     )),
-                                    const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                                    Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
                                   ],
                                 ),
                               ),
@@ -173,14 +173,14 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                 onTap: ()async{
                                   launchUrlString("https://api.whatsapp.com/send/?phone=+250788606765&text&type=phone_number&app_absent=0");
                                 },
-                                child: Row(
+                                child: const Row(
                                   children: [
-                                    const CircleAvatar(radius:20,child: Icon(Icons.question_mark),),
+                                    CircleAvatar(radius:20,child: Icon(Icons.question_mark),),
                                     Expanded(child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        children: const [
+                                        children: [
                                           Text("Help & Support",style: TextStyle(
                                               fontSize: 16
                                           ),),
@@ -191,7 +191,7 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                         ],
                                       ),
                                     )),
-                                    const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                                    Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
                                   ],
                                 ),
                               ),
@@ -217,16 +217,16 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 15.0),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
                             child: Row(
                               children: [
-                                const CircleAvatar(radius:20,backgroundColor: Colors.redAccent,child: Icon(Icons.logout,color: Colors.white,),),
+                                CircleAvatar(radius:20,backgroundColor: Colors.redAccent,child: Icon(Icons.logout,color: Colors.white,),),
                                 Expanded(child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: const [
+                                    children: [
                                       Text("Log out",style: TextStyle(
                                           fontSize: 16
                                       ),),
@@ -234,7 +234,7 @@ class _ProfileScreenState extends Superbase<ProfileScreen> {
                                     ],
                                   ),
                                 )),
-                                const Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
+                                Icon(Icons.arrow_forward_ios,color: Color(0xffB6ADAD),)
                               ],
                             ),
                           ),

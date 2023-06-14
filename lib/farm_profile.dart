@@ -128,11 +128,11 @@ class _FarmProfileState extends Superbase<FarmProfile> {
                               child: Row(
                                 children: [
                                   CircleAvatar(radius:23,child: Image.asset("assets/info_vector.png"),),
-                                  Expanded(child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  const Expanded(child: Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: const [
+                                      children: [
                                         Text("Farm Information",style: TextStyle(
                                             fontSize: 12,
                                             color: Color(0xffB6ADAD)

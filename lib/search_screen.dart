@@ -20,7 +20,6 @@ class _SearchScreenState extends Superbase<SearchScreen> {
   @override
   void didUpdateWidget(covariant SearchScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     if (oldWidget.query != widget.query && widget.query.isNotEmpty) {
       search();
     }

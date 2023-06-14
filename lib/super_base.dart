@@ -386,9 +386,9 @@ abstract class Superbase<T extends StatefulWidget> extends State<T> {
                       decoration: BoxDecoration(
                           color: Colors.black54,
                           borderRadius: BorderRadius.circular(7)),
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: const <Widget>[
+                        children: <Widget>[
                           CircularProgressIndicator(
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.white),

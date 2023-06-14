@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:orora2/farm_production_list.dart';
 import 'package:orora2/farm_profile.dart';
 import 'package:orora2/farm_registration.dart';
 import 'package:orora2/json/user.dart';

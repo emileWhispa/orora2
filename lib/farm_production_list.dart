@@ -138,8 +138,8 @@ class _FarmProductionListState extends Superbase<FarmProductionList> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Expanded(child: Text("Date",style: TextStyle(
                           fontWeight: FontWeight.bold
                       ))),
@@ -304,7 +304,7 @@ class _ProductionDetailsState extends Superbase<ProductionDetails> {
                 ],
               ),
             ),
-            SafeArea(
+            const SafeArea(
               top: false,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

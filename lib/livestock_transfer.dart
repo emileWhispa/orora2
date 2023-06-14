@@ -54,7 +54,7 @@ class _LivestockTransferState extends Superbase<LivestockTransfer> {
         if(s['code'] == 200) {
           goBack();
         }
-      },error: (s,v)=>print(s));
+      });
       setState(() {
         _loading = false;
       });

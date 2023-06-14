@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orora2/livestock_profile.dart';
 import 'package:orora2/livestock_registration.dart';
-import 'package:orora2/livestock_transfer.dart';
 import 'package:orora2/super_base.dart';
 
 import 'json/farm.dart';

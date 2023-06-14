@@ -81,8 +81,8 @@ class _ExpensesListState extends Superbase<ExpensesList> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Expanded(child: Text("Date",style: TextStyle(
                           fontWeight: FontWeight.bold
                       ))),
